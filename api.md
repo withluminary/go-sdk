@@ -10,6 +10,7 @@ Response Types:
 - <a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#DocumentSummary">DocumentSummary</a>
 - <a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#DocumentSummaryEntryMode">DocumentSummaryEntryMode</a>
 - <a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#DocumentSummaryFormat">DocumentSummaryFormat</a>
+- <a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#PageInfo">PageInfo</a>
 - <a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#DocumentSummaryListResponse">DocumentSummaryListResponse</a>
 
 Methods:
@@ -108,10 +109,10 @@ Methods:
 
 Response Types:
 
-- <a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#UserGetResponse">UserGetResponse</a>
+- <a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#User">User</a>
 - <a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#UserListResponse">UserListResponse</a>
 
 Methods:
 
-- <code title="get /users/{id}">client.Users.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#UserService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#UserGetResponse">UserGetResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+- <code title="get /users/{id}">client.Users.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#UserService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>) (<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#User">User</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /users">client.Users.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#UserService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#UserListParams">UserListParams</a>) (<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go">withluminary</a>.<a href="https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#UserListResponse">UserListResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>

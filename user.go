@@ -39,7 +39,7 @@ func NewUserService(opts ...option.RequestOption) (r UserService) {
 }
 
 // Retrieve detailed information about a specific user
-func (r *UserService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *UserGetResponse, err error) {
+func (r *UserService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *User, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if id == "" {
 		err = errors.New("missing required id parameter")
@@ -58,7 +58,7 @@ func (r *UserService) List(ctx context.Context, query UserListParams, opts ...op
 	return
 }
 
-type UserGetResponse struct {
+type User struct {
 	// Unique identifier with user\_ prefix
 	ID string `json:"id,required"`
 	// Timestamp when the user was created
@@ -85,14 +85,14 @@ type UserGetResponse struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r UserGetResponse) RawJSON() string { return r.JSON.raw }
-func (r *UserGetResponse) UnmarshalJSON(data []byte) error {
+func (r User) RawJSON() string { return r.JSON.raw }
+func (r *User) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
 type UserListResponse struct {
-	Data     []UserListResponseData   `json:"data,required"`
-	PageInfo UserListResponsePageInfo `json:"page_info,required"`
+	Data     []User   `json:"data,required"`
+	PageInfo PageInfo `json:"page_info,required"`
 	// Total number of items matching the query (across all pages)
 	TotalCount int64 `json:"total_count,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -108,64 +108,6 @@ type UserListResponse struct {
 // Returns the unmodified JSON received from the API
 func (r UserListResponse) RawJSON() string { return r.JSON.raw }
 func (r *UserListResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type UserListResponseData struct {
-	// Unique identifier with user\_ prefix
-	ID string `json:"id,required"`
-	// Timestamp when the user was created
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Email address of the user
-	Email string `json:"email,required" format:"email"`
-	// First name of the user
-	FirstName string `json:"first_name,required"`
-	// Last name of the user
-	LastName string `json:"last_name,required"`
-	// Timestamp when the user was last updated
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		ID          respjson.Field
-		CreatedAt   respjson.Field
-		Email       respjson.Field
-		FirstName   respjson.Field
-		LastName    respjson.Field
-		UpdatedAt   respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r UserListResponseData) RawJSON() string { return r.JSON.raw }
-func (r *UserListResponseData) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type UserListResponsePageInfo struct {
-	// When paginating forwards, are there more items?
-	HasNextPage bool `json:"has_next_page,required"`
-	// When paginating backwards, are there more items?
-	HasPreviousPage bool `json:"has_previous_page,required"`
-	// Cursor pointing to the last item in the current page
-	EndCursor string `json:"end_cursor,nullable"`
-	// Cursor pointing to the first item in the current page
-	StartCursor string `json:"start_cursor,nullable"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		HasNextPage     respjson.Field
-		HasPreviousPage respjson.Field
-		EndCursor       respjson.Field
-		StartCursor     respjson.Field
-		ExtraFields     map[string]respjson.Field
-		raw             string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r UserListResponsePageInfo) RawJSON() string { return r.JSON.raw }
-func (r *UserListResponsePageInfo) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
