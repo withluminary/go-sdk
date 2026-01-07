@@ -19,6 +19,7 @@ import (
 	"github.com/withluminary/go-sdk/internal/apiquery"
 	"github.com/withluminary/go-sdk/internal/requestconfig"
 	"github.com/withluminary/go-sdk/option"
+	"github.com/withluminary/go-sdk/packages/pagination"
 	"github.com/withluminary/go-sdk/packages/param"
 	"github.com/withluminary/go-sdk/packages/respjson"
 )
@@ -75,11 +76,26 @@ func (r *DocumentService) Update(ctx context.Context, id string, body DocumentUp
 }
 
 // Retrieve a paginated list of documents using cursor-based pagination
-func (r *DocumentService) List(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) (res *DocumentList, err error) {
+func (r *DocumentService) List(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) (res *pagination.CursorPagination[Document], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "documents"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a paginated list of documents using cursor-based pagination
+func (r *DocumentService) ListAutoPaging(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) *pagination.CursorPaginationAutoPager[Document] {
+	return pagination.NewCursorPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Soft delete a document (marks as deleted but preserves data)
