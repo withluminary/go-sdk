@@ -12,7 +12,7 @@ import (
 	"github.com/withluminary/go-sdk/option"
 )
 
-func TestUsage(t *testing.T) {
+func TestAutoPagination(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,10 +25,13 @@ func TestUsage(t *testing.T) {
 		option.WithClientID("My Client ID"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	t.Skip("Prism tests are disabled")
-	page, err := client.Households.List(context.TODO(), withluminary.HouseholdListParams{})
-	if err != nil {
+	iter := client.Households.ListAutoPaging(context.TODO(), withluminary.HouseholdListParams{})
+	// Prism mock isn't going to give us real pagination
+	for i := 0; i < 3 && iter.Next(); i++ {
+		household := iter.Current()
+		t.Logf("%+v\n", household.ID)
+	}
+	if err := iter.Err(); err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
-	t.Logf("%+v\n", page)
 }

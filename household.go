@@ -15,6 +15,7 @@ import (
 	"github.com/withluminary/go-sdk/internal/apiquery"
 	"github.com/withluminary/go-sdk/internal/requestconfig"
 	"github.com/withluminary/go-sdk/option"
+	"github.com/withluminary/go-sdk/packages/pagination"
 	"github.com/withluminary/go-sdk/packages/param"
 	"github.com/withluminary/go-sdk/packages/respjson"
 )
@@ -71,11 +72,26 @@ func (r *HouseholdService) Update(ctx context.Context, id string, body Household
 }
 
 // Retrieve a paginated list of households using cursor-based pagination
-func (r *HouseholdService) List(ctx context.Context, query HouseholdListParams, opts ...option.RequestOption) (res *HouseholdListResponse, err error) {
+func (r *HouseholdService) List(ctx context.Context, query HouseholdListParams, opts ...option.RequestOption) (res *pagination.CursorPagination[Household], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "households"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a paginated list of households using cursor-based pagination
+func (r *HouseholdService) ListAutoPaging(ctx context.Context, query HouseholdListParams, opts ...option.RequestOption) *pagination.CursorPaginationAutoPager[Household] {
+	return pagination.NewCursorPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Soft delete a household (marks as deleted but preserves data)
@@ -92,40 +108,86 @@ func (r *HouseholdService) Delete(ctx context.Context, id string, opts ...option
 }
 
 // Retrieve a paginated list of documents belonging to a specific household
-func (r *HouseholdService) ListDocuments(ctx context.Context, id string, query HouseholdListDocumentsParams, opts ...option.RequestOption) (res *DocumentList, err error) {
+func (r *HouseholdService) ListDocuments(ctx context.Context, id string, query HouseholdListDocumentsParams, opts ...option.RequestOption) (res *pagination.CursorPagination[Document], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")
 		return
 	}
 	path := fmt.Sprintf("households/%s/documents", id)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a paginated list of documents belonging to a specific household
+func (r *HouseholdService) ListDocumentsAutoPaging(ctx context.Context, id string, query HouseholdListDocumentsParams, opts ...option.RequestOption) *pagination.CursorPaginationAutoPager[Document] {
+	return pagination.NewCursorPaginationAutoPager(r.ListDocuments(ctx, id, query, opts...))
 }
 
 // Retrieve a paginated list of entities belonging to a specific household
-func (r *HouseholdService) ListEntities(ctx context.Context, id string, query HouseholdListEntitiesParams, opts ...option.RequestOption) (res *EntityList, err error) {
+func (r *HouseholdService) ListEntities(ctx context.Context, id string, query HouseholdListEntitiesParams, opts ...option.RequestOption) (res *pagination.CursorPagination[Entity], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")
 		return
 	}
 	path := fmt.Sprintf("households/%s/entities", id)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a paginated list of entities belonging to a specific household
+func (r *HouseholdService) ListEntitiesAutoPaging(ctx context.Context, id string, query HouseholdListEntitiesParams, opts ...option.RequestOption) *pagination.CursorPaginationAutoPager[Entity] {
+	return pagination.NewCursorPaginationAutoPager(r.ListEntities(ctx, id, query, opts...))
 }
 
 // Retrieve a paginated list of client profiles/individuals belonging to a specific
 // household
-func (r *HouseholdService) ListIndividuals(ctx context.Context, id string, query HouseholdListIndividualsParams, opts ...option.RequestOption) (res *IndividualList, err error) {
+func (r *HouseholdService) ListIndividuals(ctx context.Context, id string, query HouseholdListIndividualsParams, opts ...option.RequestOption) (res *pagination.CursorPagination[Individual], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")
 		return
 	}
 	path := fmt.Sprintf("households/%s/individuals", id)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a paginated list of client profiles/individuals belonging to a specific
+// household
+func (r *HouseholdService) ListIndividualsAutoPaging(ctx context.Context, id string, query HouseholdListIndividualsParams, opts ...option.RequestOption) *pagination.CursorPaginationAutoPager[Individual] {
+	return pagination.NewCursorPaginationAutoPager(r.ListIndividuals(ctx, id, query, opts...))
 }
 
 type Household struct {
@@ -181,27 +243,6 @@ type IndividualList struct {
 // Returns the unmodified JSON received from the API
 func (r IndividualList) RawJSON() string { return r.JSON.raw }
 func (r *IndividualList) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type HouseholdListResponse struct {
-	Data     []Household `json:"data,required"`
-	PageInfo PageInfo    `json:"page_info,required"`
-	// Total number of items matching the query (across all pages)
-	TotalCount int64 `json:"total_count,required"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Data        respjson.Field
-		PageInfo    respjson.Field
-		TotalCount  respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r HouseholdListResponse) RawJSON() string { return r.JSON.raw }
-func (r *HouseholdListResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 

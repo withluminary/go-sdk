@@ -15,6 +15,7 @@ import (
 	"github.com/withluminary/go-sdk/internal/apiquery"
 	"github.com/withluminary/go-sdk/internal/requestconfig"
 	"github.com/withluminary/go-sdk/option"
+	"github.com/withluminary/go-sdk/packages/pagination"
 	"github.com/withluminary/go-sdk/packages/param"
 	"github.com/withluminary/go-sdk/packages/respjson"
 )
@@ -54,11 +55,27 @@ func (r *EntityService) Get(ctx context.Context, id string, opts ...option.Reque
 
 // Retrieve a paginated list of entities (trusts, businesses, accounts, etc.) using
 // cursor-based pagination
-func (r *EntityService) List(ctx context.Context, query EntityListParams, opts ...option.RequestOption) (res *EntityList, err error) {
+func (r *EntityService) List(ctx context.Context, query EntityListParams, opts ...option.RequestOption) (res *pagination.CursorPagination[Entity], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "entities"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a paginated list of entities (trusts, businesses, accounts, etc.) using
+// cursor-based pagination
+func (r *EntityService) ListAutoPaging(ctx context.Context, query EntityListParams, opts ...option.RequestOption) *pagination.CursorPaginationAutoPager[Entity] {
+	return pagination.NewCursorPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Delete an entity and all of it's related data
