@@ -57,11 +57,11 @@ func main() {
 		option.WithClientID("My Client ID"),         // defaults to os.LookupEnv("CLIENT_ID")
 		option.WithClientSecret("My Client Secret"), // defaults to os.LookupEnv("CLIENT_SECRET")
 	)
-	households, err := client.Households.List(context.TODO(), withluminary.HouseholdListParams{})
+	page, err := client.Households.List(context.TODO(), withluminary.HouseholdListParams{})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", households.Data)
+	fmt.Printf("%+v\n", page)
 }
 
 ```
@@ -285,8 +285,33 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
+```go
+iter := client.Households.ListAutoPaging(context.TODO(), withluminary.HouseholdListParams{})
+// Automatically fetches more pages as needed.
+for iter.Next() {
+	household := iter.Current()
+	fmt.Printf("%+v\n", household)
+}
+if err := iter.Err(); err != nil {
+	panic(err.Error())
+}
+```
+
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
+
+```go
+page, err := client.Households.List(context.TODO(), withluminary.HouseholdListParams{})
+for page != nil {
+	for _, household := range page.Data {
+		fmt.Printf("%+v\n", household)
+	}
+	page, err = page.GetNextPage()
+}
+if err != nil {
+	panic(err.Error())
+}
+```
 
 ### Errors
 
@@ -401,7 +426,7 @@ you need to examine response headers, status codes, or other details.
 ```go
 // Create a variable to store the HTTP response
 var response *http.Response
-households, err := client.Households.List(
+page, err := client.Households.List(
 	context.TODO(),
 	withluminary.HouseholdListParams{},
 	option.WithResponseInto(&response),
@@ -409,7 +434,7 @@ households, err := client.Households.List(
 if err != nil {
 	// handle error
 }
-fmt.Printf("%+v\n", households)
+fmt.Printf("%+v\n", page)
 
 fmt.Printf("Status Code: %d\n", response.StatusCode)
 fmt.Printf("Headers: %+#v\n", response.Header)

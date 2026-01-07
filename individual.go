@@ -15,6 +15,7 @@ import (
 	"github.com/withluminary/go-sdk/internal/apiquery"
 	"github.com/withluminary/go-sdk/internal/requestconfig"
 	"github.com/withluminary/go-sdk/option"
+	"github.com/withluminary/go-sdk/packages/pagination"
 	"github.com/withluminary/go-sdk/packages/param"
 	"github.com/withluminary/go-sdk/packages/respjson"
 )
@@ -72,11 +73,27 @@ func (r *IndividualService) Update(ctx context.Context, id string, body Individu
 
 // Retrieve a paginated list of client profiles/individuals using cursor-based
 // pagination
-func (r *IndividualService) List(ctx context.Context, query IndividualListParams, opts ...option.RequestOption) (res *IndividualList, err error) {
+func (r *IndividualService) List(ctx context.Context, query IndividualListParams, opts ...option.RequestOption) (res *pagination.CursorPagination[Individual], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "individuals"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a paginated list of client profiles/individuals using cursor-based
+// pagination
+func (r *IndividualService) ListAutoPaging(ctx context.Context, query IndividualListParams, opts ...option.RequestOption) *pagination.CursorPaginationAutoPager[Individual] {
+	return pagination.NewCursorPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Soft delete a client profile (marks as deleted but preserves data)

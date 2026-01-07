@@ -15,6 +15,7 @@ import (
 	"github.com/withluminary/go-sdk/internal/apiquery"
 	"github.com/withluminary/go-sdk/internal/requestconfig"
 	"github.com/withluminary/go-sdk/option"
+	"github.com/withluminary/go-sdk/packages/pagination"
 	"github.com/withluminary/go-sdk/packages/param"
 	"github.com/withluminary/go-sdk/packages/respjson"
 )
@@ -63,11 +64,26 @@ func (r *DocumentSummaryService) Update(ctx context.Context, id string, body Doc
 }
 
 // Retrieve a paginated list of document summaries using cursor-based pagination
-func (r *DocumentSummaryService) List(ctx context.Context, query DocumentSummaryListParams, opts ...option.RequestOption) (res *DocumentSummaryListResponse, err error) {
+func (r *DocumentSummaryService) List(ctx context.Context, query DocumentSummaryListParams, opts ...option.RequestOption) (res *pagination.CursorPagination[DocumentSummary], err error) {
+	var raw *http.Response
 	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "document-summaries"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a paginated list of document summaries using cursor-based pagination
+func (r *DocumentSummaryService) ListAutoPaging(ctx context.Context, query DocumentSummaryListParams, opts ...option.RequestOption) *pagination.CursorPaginationAutoPager[DocumentSummary] {
+	return pagination.NewCursorPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Download the document summary content in the specified format
@@ -167,27 +183,6 @@ type PageInfo struct {
 // Returns the unmodified JSON received from the API
 func (r PageInfo) RawJSON() string { return r.JSON.raw }
 func (r *PageInfo) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type DocumentSummaryListResponse struct {
-	Data     []DocumentSummary `json:"data,required"`
-	PageInfo PageInfo          `json:"page_info,required"`
-	// Total number of items matching the query (across all pages)
-	TotalCount int64 `json:"total_count,required"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Data        respjson.Field
-		PageInfo    respjson.Field
-		TotalCount  respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r DocumentSummaryListResponse) RawJSON() string { return r.JSON.raw }
-func (r *DocumentSummaryListResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
