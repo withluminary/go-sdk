@@ -1,7 +1,7 @@
 package apijson
 
 import (
-	"github.com/stainless-sdks/withluminary-go/packages/respjson"
+	"github.com/withluminary/go-sdk/packages/respjson"
 	"reflect"
 )
 

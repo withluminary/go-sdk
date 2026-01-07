@@ -1,8 +1,8 @@
 package sentinel_test
 
 import (
-	"github.com/stainless-sdks/withluminary-go/internal/encoding/json/sentinel"
-	"github.com/stainless-sdks/withluminary-go/packages/param"
+	"github.com/withluminary/go-sdk/internal/encoding/json/sentinel"
+	"github.com/withluminary/go-sdk/packages/param"
 	"reflect"
 	"slices"
 	"testing"

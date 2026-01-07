@@ -2,7 +2,7 @@ package param_test
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/withluminary-go/packages/param"
+	"github.com/withluminary/go-sdk/packages/param"
 	"testing"
 )
 

@@ -8,8 +8,8 @@ import (
 	"os"
 	"slices"
 
-	"github.com/stainless-sdks/withluminary-go/internal/requestconfig"
-	"github.com/stainless-sdks/withluminary-go/option"
+	"github.com/withluminary/go-sdk/internal/requestconfig"
+	"github.com/withluminary/go-sdk/option"
 )
 
 // Client creates a struct with services and top level methods that help with
