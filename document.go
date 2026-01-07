@@ -74,7 +74,7 @@ func (r *DocumentService) Update(ctx context.Context, id string, body DocumentUp
 	return
 }
 
-// Retrieve a paginated list of documents
+// Retrieve a paginated list of documents using cursor-based pagination
 func (r *DocumentService) List(ctx context.Context, query DocumentListParams, opts ...option.RequestOption) (res *DocumentList, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "documents"
@@ -177,12 +177,15 @@ func (r *Document) UnmarshalJSON(data []byte) error {
 }
 
 type DocumentList struct {
-	Data       []Document `json:"data,required"`
-	Pagination Pagination `json:"pagination,required"`
+	Data     []Document           `json:"data,required"`
+	PageInfo DocumentListPageInfo `json:"page_info,required"`
+	// Total number of items matching the query (across all pages)
+	TotalCount int64 `json:"total_count,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field
-		Pagination  respjson.Field
+		PageInfo    respjson.Field
+		TotalCount  respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -191,6 +194,32 @@ type DocumentList struct {
 // Returns the unmodified JSON received from the API
 func (r DocumentList) RawJSON() string { return r.JSON.raw }
 func (r *DocumentList) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type DocumentListPageInfo struct {
+	// When paginating forwards, are there more items?
+	HasNextPage bool `json:"has_next_page,required"`
+	// When paginating backwards, are there more items?
+	HasPreviousPage bool `json:"has_previous_page,required"`
+	// Cursor pointing to the last item in the current page
+	EndCursor string `json:"end_cursor,nullable"`
+	// Cursor pointing to the first item in the current page
+	StartCursor string `json:"start_cursor,nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		HasNextPage     respjson.Field
+		HasPreviousPage respjson.Field
+		EndCursor       respjson.Field
+		StartCursor     respjson.Field
+		ExtraFields     map[string]respjson.Field
+		raw             string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r DocumentListPageInfo) RawJSON() string { return r.JSON.raw }
+func (r *DocumentListPageInfo) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -348,12 +377,14 @@ func (r *DocumentUpdateParams) UnmarshalJSON(data []byte) error {
 }
 
 type DocumentListParams struct {
+	// Cursor for forward pagination. Returns items after this cursor.
+	After param.Opt[string] `query:"after,omitzero" json:"-"`
+	// Cursor for backward pagination. Returns items before this cursor.
+	Before param.Opt[string] `query:"before,omitzero" json:"-"`
 	// Filter documents by household ID
 	HouseholdID param.Opt[string] `query:"household_id,omitzero" json:"-"`
-	// Maximum number of documents to return
+	// Maximum number of items to return
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
-	// Number of documents to skip
-	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
 	// Filter by document type
 	//
 	// Any of "GRAT_DESIGN_SUMMARY", "GENERATED_PRESENTATION", "ASSET_VALUATION",

@@ -52,7 +52,8 @@ func (r *EntityService) Get(ctx context.Context, id string, opts ...option.Reque
 	return
 }
 
-// Retrieve a paginated list of entities (trusts, businesses, accounts, etc.)
+// Retrieve a paginated list of entities (trusts, businesses, accounts, etc.) using
+// cursor-based pagination
 func (r *EntityService) List(ctx context.Context, query EntityListParams, opts ...option.RequestOption) (res *EntityList, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "entities"
@@ -167,12 +168,15 @@ const (
 )
 
 type EntityList struct {
-	Data       []Entity   `json:"data,required"`
-	Pagination Pagination `json:"pagination,required"`
+	Data     []Entity           `json:"data,required"`
+	PageInfo EntityListPageInfo `json:"page_info,required"`
+	// Total number of items matching the query (across all pages)
+	TotalCount int64 `json:"total_count,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field
-		Pagination  respjson.Field
+		PageInfo    respjson.Field
+		TotalCount  respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -184,13 +188,41 @@ func (r *EntityList) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+type EntityListPageInfo struct {
+	// When paginating forwards, are there more items?
+	HasNextPage bool `json:"has_next_page,required"`
+	// When paginating backwards, are there more items?
+	HasPreviousPage bool `json:"has_previous_page,required"`
+	// Cursor pointing to the last item in the current page
+	EndCursor string `json:"end_cursor,nullable"`
+	// Cursor pointing to the first item in the current page
+	StartCursor string `json:"start_cursor,nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		HasNextPage     respjson.Field
+		HasPreviousPage respjson.Field
+		EndCursor       respjson.Field
+		StartCursor     respjson.Field
+		ExtraFields     map[string]respjson.Field
+		raw             string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r EntityListPageInfo) RawJSON() string { return r.JSON.raw }
+func (r *EntityListPageInfo) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type EntityListParams struct {
+	// Cursor for forward pagination. Returns items after this cursor.
+	After param.Opt[string] `query:"after,omitzero" json:"-"`
+	// Cursor for backward pagination. Returns items before this cursor.
+	Before param.Opt[string] `query:"before,omitzero" json:"-"`
 	// Filter entities by household ID
 	HouseholdID param.Opt[string] `query:"household_id,omitzero" json:"-"`
-	// Maximum number of entities to return
+	// Maximum number of items to return
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
-	// Number of entities to skip
-	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
 	// Filter by entity kind/type
 	//
 	// Any of "REVOCABLE_TRUST", "IRREVOCABLE_TRUST", "SLAT_TRUST", "ILIT_TRUST",

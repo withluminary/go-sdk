@@ -129,8 +129,9 @@ func TestHouseholdListWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Households.List(context.TODO(), withluminary.HouseholdListParams{
+		After:  withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+		Before: withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
 		Limit:  withluminary.Int(1),
-		Offset: withluminary.Int(0),
 	})
 	if err != nil {
 		var apierr *withluminary.Error
@@ -183,8 +184,9 @@ func TestHouseholdListDocumentsWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.HouseholdListDocumentsParams{
+			After:  withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+			Before: withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
 			Limit:  withluminary.Int(1),
-			Offset: withluminary.Int(0),
 			Type:   withluminary.DocumentTypeGratDesignSummary,
 		},
 	)
@@ -215,9 +217,10 @@ func TestHouseholdListEntitiesWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.HouseholdListEntitiesParams{
+			After:  withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+			Before: withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
 			Kind:   withluminary.EntityKindRevocableTrust,
 			Limit:  withluminary.Int(1),
-			Offset: withluminary.Int(0),
 		},
 	)
 	if err != nil {
@@ -247,9 +250,10 @@ func TestHouseholdListIndividualsWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.HouseholdListIndividualsParams{
+			After:     withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+			Before:    withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
 			IsPrimary: withluminary.Bool(true),
 			Limit:     withluminary.Int(1),
-			Offset:    withluminary.Int(0),
 		},
 	)
 	if err != nil {

@@ -145,10 +145,11 @@ func TestIndividualListWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Individuals.List(context.TODO(), withluminary.IndividualListParams{
+		After:       withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+		Before:      withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
 		HouseholdID: withluminary.String("household_id"),
 		IsPrimary:   withluminary.Bool(true),
 		Limit:       withluminary.Int(1),
-		Offset:      withluminary.Int(0),
 	})
 	if err != nil {
 		var apierr *withluminary.Error

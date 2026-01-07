@@ -70,7 +70,8 @@ func (r *IndividualService) Update(ctx context.Context, id string, body Individu
 	return
 }
 
-// Retrieve a paginated list of client profiles/individuals
+// Retrieve a paginated list of client profiles/individuals using cursor-based
+// pagination
 func (r *IndividualService) List(ctx context.Context, query IndividualListParams, opts ...option.RequestOption) (res *IndividualList, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "individuals"
@@ -284,14 +285,16 @@ func (r *IndividualUpdateParams) UnmarshalJSON(data []byte) error {
 }
 
 type IndividualListParams struct {
+	// Cursor for forward pagination. Returns items after this cursor.
+	After param.Opt[string] `query:"after,omitzero" json:"-"`
+	// Cursor for backward pagination. Returns items before this cursor.
+	Before param.Opt[string] `query:"before,omitzero" json:"-"`
 	// Filter individuals by household ID
 	HouseholdID param.Opt[string] `query:"household_id,omitzero" json:"-"`
 	// Filter by primary client status
 	IsPrimary param.Opt[bool] `query:"is_primary,omitzero" json:"-"`
-	// Maximum number of individuals to return
+	// Maximum number of items to return
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
-	// Number of individuals to skip
-	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
 	paramObj
 }
 

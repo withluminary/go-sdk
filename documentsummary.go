@@ -62,7 +62,7 @@ func (r *DocumentSummaryService) Update(ctx context.Context, id string, body Doc
 	return
 }
 
-// Retrieve a paginated list of document summaries
+// Retrieve a paginated list of document summaries using cursor-based pagination
 func (r *DocumentSummaryService) List(ctx context.Context, query DocumentSummaryListParams, opts ...option.RequestOption) (res *DocumentSummaryListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "document-summaries"
@@ -144,36 +144,16 @@ const (
 	DocumentSummaryFormatPlainText DocumentSummaryFormat = "PLAIN_TEXT"
 )
 
-type Pagination struct {
-	// Number of items per page
-	Limit int64 `json:"limit,required"`
-	// Number of items skipped
-	Offset int64 `json:"offset,required"`
-	// Total number of items available
-	Total int64 `json:"total,required"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Limit       respjson.Field
-		Offset      respjson.Field
-		Total       respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r Pagination) RawJSON() string { return r.JSON.raw }
-func (r *Pagination) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 type DocumentSummaryListResponse struct {
-	Data       []DocumentSummary `json:"data,required"`
-	Pagination Pagination        `json:"pagination,required"`
+	Data     []DocumentSummary                   `json:"data,required"`
+	PageInfo DocumentSummaryListResponsePageInfo `json:"page_info,required"`
+	// Total number of items matching the query (across all pages)
+	TotalCount int64 `json:"total_count,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field
-		Pagination  respjson.Field
+		PageInfo    respjson.Field
+		TotalCount  respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -182,6 +162,32 @@ type DocumentSummaryListResponse struct {
 // Returns the unmodified JSON received from the API
 func (r DocumentSummaryListResponse) RawJSON() string { return r.JSON.raw }
 func (r *DocumentSummaryListResponse) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type DocumentSummaryListResponsePageInfo struct {
+	// When paginating forwards, are there more items?
+	HasNextPage bool `json:"has_next_page,required"`
+	// When paginating backwards, are there more items?
+	HasPreviousPage bool `json:"has_previous_page,required"`
+	// Cursor pointing to the last item in the current page
+	EndCursor string `json:"end_cursor,nullable"`
+	// Cursor pointing to the first item in the current page
+	StartCursor string `json:"start_cursor,nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		HasNextPage     respjson.Field
+		HasPreviousPage respjson.Field
+		EndCursor       respjson.Field
+		StartCursor     respjson.Field
+		ExtraFields     map[string]respjson.Field
+		raw             string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r DocumentSummaryListResponsePageInfo) RawJSON() string { return r.JSON.raw }
+func (r *DocumentSummaryListResponsePageInfo) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -210,14 +216,16 @@ func (r *DocumentSummaryUpdateParams) UnmarshalJSON(data []byte) error {
 }
 
 type DocumentSummaryListParams struct {
+	// Cursor for forward pagination. Returns items after this cursor.
+	After param.Opt[string] `query:"after,omitzero" json:"-"`
+	// Cursor for backward pagination. Returns items before this cursor.
+	Before param.Opt[string] `query:"before,omitzero" json:"-"`
 	// Filter summaries by document ID
 	DocumentID param.Opt[string] `query:"document_id,omitzero" json:"-"`
 	// Filter summaries by household ID
 	HouseholdID param.Opt[string] `query:"household_id,omitzero" json:"-"`
-	// Maximum number of summaries to return
+	// Maximum number of items to return
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
-	// Number of summaries to skip
-	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
 	paramObj
 }
 

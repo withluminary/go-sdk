@@ -22,6 +22,7 @@ type Client struct {
 	Entities          EntityService
 	Households        HouseholdService
 	Individuals       IndividualService
+	Users             UserService
 }
 
 // DefaultClientOptions read from the environment (CLIENT_ID, CLIENT_SECRET,
@@ -60,6 +61,7 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.Entities = NewEntityService(opts...)
 	r.Households = NewHouseholdService(opts...)
 	r.Individuals = NewIndividualService(opts...)
+	r.Users = NewUserService(opts...)
 
 	return
 }
