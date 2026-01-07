@@ -96,6 +96,12 @@ func SubstituteServerVariables(templateURL *url.URL, cfg *RequestConfig) (*url.U
 		}
 		baseURL = strings.ReplaceAll(baseURL, "SUBDOMAIN", cfg.Subdomain)
 	}
+	if strings.Count(baseURL, "AUTH_DOMAIN") >= 1 {
+		if cfg.AuthDomain == "" {
+			return nil, fmt.Errorf("must provide AuthDomain to substitute %s", baseURL)
+		}
+		baseURL = strings.ReplaceAll(baseURL, "AUTH_DOMAIN", cfg.AuthDomain)
+	}
 	substitutedURL, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse BaseURL after substitutions: %w", err)
@@ -246,6 +252,7 @@ type RequestConfig struct {
 	ClientID       string
 	ClientSecret   string
 	Subdomain      string
+	AuthDomain     string
 	// OAuth2State holds the OAuth2 provider configuration and cached token information
 	OAuth2State *OAuth2State
 	// If ResponseBodyInto not nil, then we will attempt to deserialize into
@@ -631,6 +638,7 @@ func (cfg *RequestConfig) Clone(ctx context.Context) *RequestConfig {
 		ClientID:       cfg.ClientID,
 		ClientSecret:   cfg.ClientSecret,
 		Subdomain:      cfg.Subdomain,
+		AuthDomain:     cfg.AuthDomain,
 	}
 
 	return new
