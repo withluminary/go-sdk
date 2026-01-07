@@ -70,7 +70,7 @@ func (r *HouseholdService) Update(ctx context.Context, id string, body Household
 	return
 }
 
-// Retrieve a paginated list of households
+// Retrieve a paginated list of households using cursor-based pagination
 func (r *HouseholdService) List(ctx context.Context, query HouseholdListParams, opts ...option.RequestOption) (res *HouseholdListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "households"
@@ -164,12 +164,15 @@ func (r *Household) UnmarshalJSON(data []byte) error {
 }
 
 type IndividualList struct {
-	Data       []Individual `json:"data,required"`
-	Pagination Pagination   `json:"pagination,required"`
+	Data     []Individual           `json:"data,required"`
+	PageInfo IndividualListPageInfo `json:"page_info,required"`
+	// Total number of items matching the query (across all pages)
+	TotalCount int64 `json:"total_count,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field
-		Pagination  respjson.Field
+		PageInfo    respjson.Field
+		TotalCount  respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -181,13 +184,42 @@ func (r *IndividualList) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+type IndividualListPageInfo struct {
+	// When paginating forwards, are there more items?
+	HasNextPage bool `json:"has_next_page,required"`
+	// When paginating backwards, are there more items?
+	HasPreviousPage bool `json:"has_previous_page,required"`
+	// Cursor pointing to the last item in the current page
+	EndCursor string `json:"end_cursor,nullable"`
+	// Cursor pointing to the first item in the current page
+	StartCursor string `json:"start_cursor,nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		HasNextPage     respjson.Field
+		HasPreviousPage respjson.Field
+		EndCursor       respjson.Field
+		StartCursor     respjson.Field
+		ExtraFields     map[string]respjson.Field
+		raw             string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r IndividualListPageInfo) RawJSON() string { return r.JSON.raw }
+func (r *IndividualListPageInfo) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type HouseholdListResponse struct {
-	Data       []Household `json:"data,required"`
-	Pagination Pagination  `json:"pagination,required"`
+	Data     []Household                   `json:"data,required"`
+	PageInfo HouseholdListResponsePageInfo `json:"page_info,required"`
+	// Total number of items matching the query (across all pages)
+	TotalCount int64 `json:"total_count,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field
-		Pagination  respjson.Field
+		PageInfo    respjson.Field
+		TotalCount  respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -196,6 +228,32 @@ type HouseholdListResponse struct {
 // Returns the unmodified JSON received from the API
 func (r HouseholdListResponse) RawJSON() string { return r.JSON.raw }
 func (r *HouseholdListResponse) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type HouseholdListResponsePageInfo struct {
+	// When paginating forwards, are there more items?
+	HasNextPage bool `json:"has_next_page,required"`
+	// When paginating backwards, are there more items?
+	HasPreviousPage bool `json:"has_previous_page,required"`
+	// Cursor pointing to the last item in the current page
+	EndCursor string `json:"end_cursor,nullable"`
+	// Cursor pointing to the first item in the current page
+	StartCursor string `json:"start_cursor,nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		HasNextPage     respjson.Field
+		HasPreviousPage respjson.Field
+		EndCursor       respjson.Field
+		StartCursor     respjson.Field
+		ExtraFields     map[string]respjson.Field
+		raw             string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r HouseholdListResponsePageInfo) RawJSON() string { return r.JSON.raw }
+func (r *HouseholdListResponsePageInfo) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -280,10 +338,12 @@ func (r *HouseholdUpdateParams) UnmarshalJSON(data []byte) error {
 }
 
 type HouseholdListParams struct {
-	// Maximum number of households to return
+	// Cursor for forward pagination. Returns items after this cursor.
+	After param.Opt[string] `query:"after,omitzero" json:"-"`
+	// Cursor for backward pagination. Returns items before this cursor.
+	Before param.Opt[string] `query:"before,omitzero" json:"-"`
+	// Maximum number of items to return
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
-	// Number of households to skip
-	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
 	paramObj
 }
 
@@ -296,10 +356,12 @@ func (r HouseholdListParams) URLQuery() (v url.Values, err error) {
 }
 
 type HouseholdListDocumentsParams struct {
-	// Maximum number of documents to return
+	// Cursor for forward pagination. Returns items after this cursor.
+	After param.Opt[string] `query:"after,omitzero" json:"-"`
+	// Cursor for backward pagination. Returns items before this cursor.
+	Before param.Opt[string] `query:"before,omitzero" json:"-"`
+	// Maximum number of items to return
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
-	// Number of documents to skip
-	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
 	// Filter by document type
 	//
 	// Any of "GRAT_DESIGN_SUMMARY", "GENERATED_PRESENTATION", "ASSET_VALUATION",
@@ -330,10 +392,12 @@ func (r HouseholdListDocumentsParams) URLQuery() (v url.Values, err error) {
 }
 
 type HouseholdListEntitiesParams struct {
-	// Maximum number of entities to return
+	// Cursor for forward pagination. Returns items after this cursor.
+	After param.Opt[string] `query:"after,omitzero" json:"-"`
+	// Cursor for backward pagination. Returns items before this cursor.
+	Before param.Opt[string] `query:"before,omitzero" json:"-"`
+	// Maximum number of items to return
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
-	// Number of entities to skip
-	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
 	// Filter by entity kind/type
 	//
 	// Any of "REVOCABLE_TRUST", "IRREVOCABLE_TRUST", "SLAT_TRUST", "ILIT_TRUST",
@@ -359,12 +423,14 @@ func (r HouseholdListEntitiesParams) URLQuery() (v url.Values, err error) {
 }
 
 type HouseholdListIndividualsParams struct {
+	// Cursor for forward pagination. Returns items after this cursor.
+	After param.Opt[string] `query:"after,omitzero" json:"-"`
+	// Cursor for backward pagination. Returns items before this cursor.
+	Before param.Opt[string] `query:"before,omitzero" json:"-"`
 	// Filter by primary client status
 	IsPrimary param.Opt[bool] `query:"is_primary,omitzero" json:"-"`
-	// Maximum number of individuals to return
+	// Maximum number of items to return
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
-	// Number of individuals to skip
-	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
 	paramObj
 }
 

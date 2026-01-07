@@ -89,10 +89,11 @@ func TestDocumentSummaryListWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.DocumentSummaries.List(context.TODO(), withluminary.DocumentSummaryListParams{
+		After:       withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+		Before:      withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
 		DocumentID:  withluminary.String("document_id"),
 		HouseholdID: withluminary.String("household_id"),
 		Limit:       withluminary.Int(1),
-		Offset:      withluminary.Int(0),
 	})
 	if err != nil {
 		var apierr *withluminary.Error

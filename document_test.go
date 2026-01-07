@@ -122,9 +122,10 @@ func TestDocumentListWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Documents.List(context.TODO(), withluminary.DocumentListParams{
+		After:       withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+		Before:      withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
 		HouseholdID: withluminary.String("household_id"),
 		Limit:       withluminary.Int(1),
-		Offset:      withluminary.Int(0),
 		Type:        withluminary.DocumentTypeGratDesignSummary,
 	})
 	if err != nil {
