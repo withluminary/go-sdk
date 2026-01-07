@@ -164,8 +164,8 @@ func (r *Household) UnmarshalJSON(data []byte) error {
 }
 
 type IndividualList struct {
-	Data     []Individual           `json:"data,required"`
-	PageInfo IndividualListPageInfo `json:"page_info,required"`
+	Data     []Individual `json:"data,required"`
+	PageInfo PageInfo     `json:"page_info,required"`
 	// Total number of items matching the query (across all pages)
 	TotalCount int64 `json:"total_count,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -184,35 +184,9 @@ func (r *IndividualList) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-type IndividualListPageInfo struct {
-	// When paginating forwards, are there more items?
-	HasNextPage bool `json:"has_next_page,required"`
-	// When paginating backwards, are there more items?
-	HasPreviousPage bool `json:"has_previous_page,required"`
-	// Cursor pointing to the last item in the current page
-	EndCursor string `json:"end_cursor,nullable"`
-	// Cursor pointing to the first item in the current page
-	StartCursor string `json:"start_cursor,nullable"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		HasNextPage     respjson.Field
-		HasPreviousPage respjson.Field
-		EndCursor       respjson.Field
-		StartCursor     respjson.Field
-		ExtraFields     map[string]respjson.Field
-		raw             string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r IndividualListPageInfo) RawJSON() string { return r.JSON.raw }
-func (r *IndividualListPageInfo) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
 type HouseholdListResponse struct {
-	Data     []Household                   `json:"data,required"`
-	PageInfo HouseholdListResponsePageInfo `json:"page_info,required"`
+	Data     []Household `json:"data,required"`
+	PageInfo PageInfo    `json:"page_info,required"`
 	// Total number of items matching the query (across all pages)
 	TotalCount int64 `json:"total_count,required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -228,32 +202,6 @@ type HouseholdListResponse struct {
 // Returns the unmodified JSON received from the API
 func (r HouseholdListResponse) RawJSON() string { return r.JSON.raw }
 func (r *HouseholdListResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type HouseholdListResponsePageInfo struct {
-	// When paginating forwards, are there more items?
-	HasNextPage bool `json:"has_next_page,required"`
-	// When paginating backwards, are there more items?
-	HasPreviousPage bool `json:"has_previous_page,required"`
-	// Cursor pointing to the last item in the current page
-	EndCursor string `json:"end_cursor,nullable"`
-	// Cursor pointing to the first item in the current page
-	StartCursor string `json:"start_cursor,nullable"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		HasNextPage     respjson.Field
-		HasPreviousPage respjson.Field
-		EndCursor       respjson.Field
-		StartCursor     respjson.Field
-		ExtraFields     map[string]respjson.Field
-		raw             string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r HouseholdListResponsePageInfo) RawJSON() string { return r.JSON.raw }
-func (r *HouseholdListResponsePageInfo) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 

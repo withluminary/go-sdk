@@ -144,28 +144,7 @@ const (
 	DocumentSummaryFormatPlainText DocumentSummaryFormat = "PLAIN_TEXT"
 )
 
-type DocumentSummaryListResponse struct {
-	Data     []DocumentSummary                   `json:"data,required"`
-	PageInfo DocumentSummaryListResponsePageInfo `json:"page_info,required"`
-	// Total number of items matching the query (across all pages)
-	TotalCount int64 `json:"total_count,required"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Data        respjson.Field
-		PageInfo    respjson.Field
-		TotalCount  respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r DocumentSummaryListResponse) RawJSON() string { return r.JSON.raw }
-func (r *DocumentSummaryListResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type DocumentSummaryListResponsePageInfo struct {
+type PageInfo struct {
 	// When paginating forwards, are there more items?
 	HasNextPage bool `json:"has_next_page,required"`
 	// When paginating backwards, are there more items?
@@ -186,8 +165,29 @@ type DocumentSummaryListResponsePageInfo struct {
 }
 
 // Returns the unmodified JSON received from the API
-func (r DocumentSummaryListResponsePageInfo) RawJSON() string { return r.JSON.raw }
-func (r *DocumentSummaryListResponsePageInfo) UnmarshalJSON(data []byte) error {
+func (r PageInfo) RawJSON() string { return r.JSON.raw }
+func (r *PageInfo) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type DocumentSummaryListResponse struct {
+	Data     []DocumentSummary `json:"data,required"`
+	PageInfo PageInfo          `json:"page_info,required"`
+	// Total number of items matching the query (across all pages)
+	TotalCount int64 `json:"total_count,required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Data        respjson.Field
+		PageInfo    respjson.Field
+		TotalCount  respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r DocumentSummaryListResponse) RawJSON() string { return r.JSON.raw }
+func (r *DocumentSummaryListResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
