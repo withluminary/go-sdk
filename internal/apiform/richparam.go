@@ -1,7 +1,7 @@
 package apiform
 
 import (
-	"github.com/stainless-sdks/withluminary-go/packages/param"
+	"github.com/withluminary/go-sdk/packages/param"
 	"mime/multipart"
 	"reflect"
 )

@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/withluminary-go"
-	"github.com/stainless-sdks/withluminary-go/internal/testutil"
-	"github.com/stainless-sdks/withluminary-go/option"
+	"github.com/withluminary/go-sdk"
+	"github.com/withluminary/go-sdk/internal/testutil"
+	"github.com/withluminary/go-sdk/option"
 )
 
 func TestUsage(t *testing.T) {
