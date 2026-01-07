@@ -11,12 +11,12 @@ import (
 	"slices"
 	"time"
 
-	"github.com/stainless-sdks/withluminary-go/internal/apijson"
-	"github.com/stainless-sdks/withluminary-go/internal/apiquery"
-	"github.com/stainless-sdks/withluminary-go/internal/requestconfig"
-	"github.com/stainless-sdks/withluminary-go/option"
-	"github.com/stainless-sdks/withluminary-go/packages/param"
-	"github.com/stainless-sdks/withluminary-go/packages/respjson"
+	"github.com/withluminary/go-sdk/internal/apijson"
+	"github.com/withluminary/go-sdk/internal/apiquery"
+	"github.com/withluminary/go-sdk/internal/requestconfig"
+	"github.com/withluminary/go-sdk/option"
+	"github.com/withluminary/go-sdk/packages/param"
+	"github.com/withluminary/go-sdk/packages/respjson"
 )
 
 // UserService contains methods and other services that help with interacting with

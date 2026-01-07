@@ -3,8 +3,8 @@
 package withluminary
 
 import (
-	"github.com/stainless-sdks/withluminary-go/internal/apierror"
-	"github.com/stainless-sdks/withluminary-go/packages/param"
+	"github.com/withluminary/go-sdk/internal/apierror"
+	"github.com/withluminary/go-sdk/packages/param"
 )
 
 // aliased to make [param.APIUnion] private when embedding

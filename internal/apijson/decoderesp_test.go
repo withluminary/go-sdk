@@ -2,8 +2,8 @@ package apijson_test
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/withluminary-go/internal/apijson"
-	"github.com/stainless-sdks/withluminary-go/packages/respjson"
+	"github.com/withluminary/go-sdk/internal/apijson"
+	"github.com/withluminary/go-sdk/packages/respjson"
 	"testing"
 )
 

@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/withluminary-go
+module github.com/withluminary/go-sdk
 
 go 1.22
 

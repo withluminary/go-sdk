@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/stainless-sdks/withluminary-go/packages/param"
+	"github.com/withluminary/go-sdk/packages/param"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc

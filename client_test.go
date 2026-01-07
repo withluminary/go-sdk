@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/withluminary-go"
-	"github.com/stainless-sdks/withluminary-go/internal"
-	"github.com/stainless-sdks/withluminary-go/option"
+	"github.com/withluminary/go-sdk"
+	"github.com/withluminary/go-sdk/internal"
+	"github.com/withluminary/go-sdk/option"
 )
 
 type closureTransport struct {

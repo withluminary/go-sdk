@@ -11,15 +11,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stainless-sdks/withluminary-go/internal/requestconfig"
 	"github.com/tidwall/sjson"
+	"github.com/withluminary/go-sdk/internal/requestconfig"
 )
 
 // RequestOption is an option for the requests made by the luminary API Client
 // which can be supplied to clients, services, and methods. You can read more about this functional
 // options pattern in our [README].
 //
-// [README]: https://pkg.go.dev/github.com/stainless-sdks/withluminary-go#readme-requestoptions
+// [README]: https://pkg.go.dev/github.com/withluminary/go-sdk#readme-requestoptions
 type RequestOption = requestconfig.RequestOption
 
 // WithBaseURL returns a RequestOption that sets the BaseURL for the client.
