@@ -268,7 +268,7 @@ func WithEnvironmentProduction() RequestOption {
 
 // WithClientID returns a RequestOption that sets the client setting "client_id".
 func WithClientID(value string) RequestOption {
-	oauthState := requestconfig.OAuth2Cache["{auth_domain}/oauth2/token"]
+	oauthState := requestconfig.OAuth2Cache["https://auth.withluminary.com/oauth2/token"]
 	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
 		r.ClientID = value
 		r.OAuth2State = oauthState
@@ -278,7 +278,7 @@ func WithClientID(value string) RequestOption {
 
 // WithClientSecret returns a RequestOption that sets the client setting "client_secret".
 func WithClientSecret(value string) RequestOption {
-	oauthState := requestconfig.OAuth2Cache["{auth_domain}/oauth2/token"]
+	oauthState := requestconfig.OAuth2Cache["https://auth.withluminary.com/oauth2/token"]
 	return requestconfig.RequestOptionFunc(func(r *requestconfig.RequestConfig) error {
 		r.ClientSecret = value
 		r.OAuth2State = oauthState
@@ -290,14 +290,6 @@ func WithClientSecret(value string) RequestOption {
 func WithSubdomain(value string) RequestOption {
 	return requestconfig.PreRequestOptionFunc(func(r *requestconfig.RequestConfig) error {
 		r.Subdomain = value
-		return nil
-	})
-}
-
-// WithAuthDomain returns a RequestOption that sets the client setting "auth_domain".
-func WithAuthDomain(value string) RequestOption {
-	return requestconfig.PreRequestOptionFunc(func(r *requestconfig.RequestConfig) error {
-		r.AuthDomain = value
 		return nil
 	})
 }
