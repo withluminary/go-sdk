@@ -26,15 +26,14 @@ type Client struct {
 }
 
 // DefaultClientOptions read from the environment (CLIENT_ID, CLIENT_SECRET,
-// WITHLUMINARY_SUBDOMAIN, WITHLUMINARY_AUTH_DOMAIN, LUMINARY_BASE_URL). This
-// should be used to initialize new clients.
+// WITHLUMINARY_SUBDOMAIN, LUMINARY_BASE_URL). This should be used to initialize
+// new clients.
 func DefaultClientOptions() []option.RequestOption {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("LUMINARY_BASE_URL"); ok {
 		defaults = append(defaults, option.WithBaseURL(o))
 	}
 	defaults = append(defaults, option.WithSubdomain("lum"))
-	defaults = append(defaults, option.WithAuthDomain("https://auth.withluminary.com/"))
 	if o, ok := os.LookupEnv("CLIENT_ID"); ok {
 		defaults = append(defaults, option.WithClientID(o))
 	}
@@ -44,17 +43,14 @@ func DefaultClientOptions() []option.RequestOption {
 	if o, ok := os.LookupEnv("WITHLUMINARY_SUBDOMAIN"); ok {
 		defaults = append(defaults, option.WithSubdomain(o))
 	}
-	if o, ok := os.LookupEnv("WITHLUMINARY_AUTH_DOMAIN"); ok {
-		defaults = append(defaults, option.WithAuthDomain(o))
-	}
 	return defaults
 }
 
 // NewClient generates a new client with the default option read from the
 // environment (CLIENT_ID, CLIENT_SECRET, WITHLUMINARY_SUBDOMAIN,
-// WITHLUMINARY_AUTH_DOMAIN, LUMINARY_BASE_URL). The option passed in as arguments
-// are applied after these default arguments, and all option will be passed down to
-// the services and requests that this client makes.
+// LUMINARY_BASE_URL). The option passed in as arguments are applied after these
+// default arguments, and all option will be passed down to the services and
+// requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r Client) {
 	opts = append(DefaultClientOptions(), opts...)
 
