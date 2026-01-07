@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-var OAuth2Cache = newOAuth2Cache("https://auth.withluminary.com/oauth2/token")
+var OAuth2Cache = newOAuth2Cache("{auth_domain}/oauth2/token")
 
 func newOAuth2Cache(tokenUrls ...string) map[string]*OAuth2State {
 	state := make(map[string]*OAuth2State, len(tokenUrls))
