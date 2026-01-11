@@ -59,7 +59,7 @@ func TestDocumentSummaryUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.DocumentSummaryUpdateParams{
-			DisplayName:   withluminary.String("display_name"),
+			DisplayName:   withluminary.String("x"),
 			EntryMode:     withluminary.DocumentSummaryEntryModeAIAuto,
 			Summary:       withluminary.String("summary"),
 			SummaryFormat: withluminary.DocumentSummaryFormatMarkdown,

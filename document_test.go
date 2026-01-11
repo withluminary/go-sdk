@@ -36,9 +36,9 @@ func TestDocumentNewWithOptionalParams(t *testing.T) {
 		HouseholdID:         "household_01ARZ3NDEKTSV4RRFFQ69G5FAV",
 		Name:                "Trust Agreement.pdf",
 		Type:                withluminary.DocumentTypeGratDesignSummary,
-		ClientProfileID:     withluminary.String("client_profile_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
 		EnableAISuggestions: withluminary.Bool(true),
 		EntityID:            withluminary.String("entity_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
+		IndividualID:        withluminary.String("client_profile_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
 	})
 	if err != nil {
 		var apierr *withluminary.Error
@@ -91,10 +91,10 @@ func TestDocumentUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.DocumentUpdateParams{
-			ClientProfileID:     withluminary.String("client_profile_id"),
 			EnableAISuggestions: withluminary.Bool(true),
 			EntityID:            withluminary.String("entity_id"),
-			Name:                withluminary.String("name"),
+			IndividualID:        withluminary.String("individual_id"),
+			Name:                withluminary.String("x"),
 			Type:                withluminary.DocumentTypeGratDesignSummary,
 		},
 	)
