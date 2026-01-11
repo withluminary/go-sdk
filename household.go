@@ -270,7 +270,7 @@ type HouseholdNewParamsPrimaryIndividual struct {
 	FirstName string `json:"first_name,required"`
 	// Last name of the individual
 	LastName string `json:"last_name,required"`
-	// State or province
+	// State or province code (2 letter code)
 	State string `json:"state,required"`
 	// Street address line 1
 	AddressLine1 param.Opt[string] `json:"address_line1,omitzero"`

@@ -222,7 +222,7 @@ type IndividualNewParams struct {
 	Notes param.Opt[string] `json:"notes,omitzero"`
 	// ZIP or postal code
 	PostalCode param.Opt[string] `json:"postal_code,omitzero"`
-	// State or province
+	// State or province code (2 letter code)
 	State param.Opt[string] `json:"state,omitzero"`
 	// Name suffix
 	Suffix param.Opt[string] `json:"suffix,omitzero"`
@@ -270,7 +270,7 @@ type IndividualUpdateParams struct {
 	Notes param.Opt[string] `json:"notes,omitzero"`
 	// ZIP or postal code
 	PostalCode param.Opt[string] `json:"postal_code,omitzero"`
-	// State or province
+	// State or province code (2 letter code)
 	State param.Opt[string] `json:"state,omitzero"`
 	// Name suffix
 	Suffix param.Opt[string] `json:"suffix,omitzero"`

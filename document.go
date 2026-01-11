@@ -164,12 +164,12 @@ type Document struct {
 	Type DocumentType `json:"type,required"`
 	// Timestamp when the document was last updated
 	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
-	// Client profile ID if this document is associated with an individual
-	ClientProfileID string `json:"client_profile_id,nullable"`
 	// Whether this document should be used for AI suggestions
 	EnableAISuggestions bool `json:"enable_ai_suggestions"`
 	// Entity ID if this document is owned by an entity
 	EntityID string `json:"entity_id,nullable"`
+	// Individual ID if this document is associated with an individual
+	IndividualID string `json:"individual_id,nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID                  respjson.Field
@@ -178,9 +178,9 @@ type Document struct {
 		Name                respjson.Field
 		Type                respjson.Field
 		UpdatedAt           respjson.Field
-		ClientProfileID     respjson.Field
 		EnableAISuggestions respjson.Field
 		EntityID            respjson.Field
+		IndividualID        respjson.Field
 		ExtraFields         map[string]respjson.Field
 		raw                 string
 	} `json:"-"`
@@ -302,12 +302,12 @@ type DocumentNewParams struct {
 	// "BENEFICIAL_OWNERSHIP_INFORMATION_REPORT", "FINCEN_FILING", "HEALTHCARE_PROXY",
 	// "LIVING_WILL", "DRIVERS_LICENSE", "PASSPORT", "DEED", "OTHER".
 	Type DocumentType `json:"type,omitzero,required"`
-	// Client profile ID if associated with an individual
-	ClientProfileID param.Opt[string] `json:"client_profile_id,omitzero"`
 	// Whether this document should be used for AI suggestions
 	EnableAISuggestions param.Opt[bool] `json:"enable_ai_suggestions,omitzero"`
 	// Entity ID if this document is owned by an entity
 	EntityID param.Opt[string] `json:"entity_id,omitzero"`
+	// Individual ID if associated with an individual
+	IndividualID param.Opt[string] `json:"individual_id,omitzero"`
 	paramObj
 }
 
@@ -330,10 +330,10 @@ func (r DocumentNewParams) MarshalMultipart() (data []byte, contentType string, 
 }
 
 type DocumentUpdateParams struct {
-	// Client profile ID if associated with an individual
-	ClientProfileID param.Opt[string] `json:"client_profile_id,omitzero"`
 	// Entity ID if this document is owned by an entity
 	EntityID param.Opt[string] `json:"entity_id,omitzero"`
+	// Individual ID if associated with an individual
+	IndividualID param.Opt[string] `json:"individual_id,omitzero"`
 	// Whether this document should be used for AI suggestions
 	EnableAISuggestions param.Opt[bool] `json:"enable_ai_suggestions,omitzero"`
 	// Display name of the document
