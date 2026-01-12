@@ -74,7 +74,8 @@ func (state *OAuth2State) GetToken(cfg *RequestConfig) (string, error) {
 		return "", err
 	}
 
-	oAuthReq, err := http.NewRequestWithContext(cfg.Context, http.MethodPost, authUrl, nil)
+	body := strings.NewReader("grant_type=client_credentials")
+	oAuthReq, err := http.NewRequestWithContext(cfg.Context, http.MethodPost, authUrl, body)
 	if err != nil {
 		return "", fmt.Errorf("requestconfig: failed to create OAuth2 token request: %w", err)
 	}
@@ -133,8 +134,5 @@ func (state *OAuth2State) authUrl(cfg *RequestConfig) (string, error) {
 		err = fmt.Errorf("requestconfig: failed to parse OAuth2 token URL: %w", err)
 		return "", err
 	}
-	q := authUrl.Query()
-	q.Set("grant_type", "client_credentials")
-	authUrl.RawQuery = q.Encode()
 	return authUrl.String(), nil
 }
