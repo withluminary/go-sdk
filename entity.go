@@ -100,6 +100,10 @@ type Entity struct {
 	DisplayName string `json:"display_name,required"`
 	// Household ID this entity belongs to
 	HouseholdID string `json:"household_id,required"`
+	// Whether the entity is in or out of the estate
+	//
+	// Any of "in_estate", "out_of_estate", "none".
+	InEstateStatus EntityInEstateStatus `json:"in_estate_status,required"`
 	// Type of entity - determines the specific subtype and applicable fields
 	//
 	// Any of "REVOCABLE_TRUST", "IRREVOCABLE_TRUST", "SLAT_TRUST", "ILIT_TRUST",
@@ -122,15 +126,16 @@ type Entity struct {
 	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		ID          respjson.Field
-		CreatedAt   respjson.Field
-		DisplayName respjson.Field
-		HouseholdID respjson.Field
-		Kind        respjson.Field
-		Stage       respjson.Field
-		UpdatedAt   respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
+		ID             respjson.Field
+		CreatedAt      respjson.Field
+		DisplayName    respjson.Field
+		HouseholdID    respjson.Field
+		InEstateStatus respjson.Field
+		Kind           respjson.Field
+		Stage          respjson.Field
+		UpdatedAt      respjson.Field
+		ExtraFields    map[string]respjson.Field
+		raw            string
 	} `json:"-"`
 }
 
@@ -139,6 +144,15 @@ func (r Entity) RawJSON() string { return r.JSON.raw }
 func (r *Entity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether the entity is in or out of the estate
+type EntityInEstateStatus string
+
+const (
+	EntityInEstateStatusInEstate    EntityInEstateStatus = "in_estate"
+	EntityInEstateStatusOutOfEstate EntityInEstateStatus = "out_of_estate"
+	EntityInEstateStatusNone        EntityInEstateStatus = "none"
+)
 
 // Lifecycle stage of the entity
 type EntityStage string
