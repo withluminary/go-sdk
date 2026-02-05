@@ -74,8 +74,7 @@ func (state *OAuth2State) GetToken(cfg *RequestConfig) (string, error) {
 		return "", err
 	}
 
-	body := strings.NewReader("grant_type=client_credentials")
-	oAuthReq, err := http.NewRequestWithContext(cfg.Context, http.MethodPost, authUrl, body)
+	oAuthReq, err := http.NewRequestWithContext(cfg.Context, http.MethodPost, authUrl, strings.NewReader("grant_type=client_credentials"))
 	if err != nil {
 		return "", fmt.Errorf("requestconfig: failed to create OAuth2 token request: %w", err)
 	}
