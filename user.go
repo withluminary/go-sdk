@@ -76,17 +76,17 @@ func (r *UserService) ListAutoPaging(ctx context.Context, query UserListParams, 
 
 type User struct {
 	// Unique identifier with user\_ prefix
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Timestamp when the user was created
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// Email address of the user
-	Email string `json:"email,required" format:"email"`
+	Email string `json:"email" api:"required" format:"email"`
 	// First name of the user
-	FirstName string `json:"first_name,required"`
+	FirstName string `json:"first_name" api:"required"`
 	// Last name of the user
-	LastName string `json:"last_name,required"`
+	LastName string `json:"last_name" api:"required"`
 	// Timestamp when the user was last updated
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID          respjson.Field

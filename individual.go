@@ -111,55 +111,55 @@ func (r *IndividualService) Delete(ctx context.Context, id string, opts ...optio
 
 type Individual struct {
 	// Unique identifier with client*profile* prefix
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Timestamp when the individual was created
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// First name of the individual
-	FirstName string `json:"first_name,required"`
+	FirstName string `json:"first_name" api:"required"`
 	// Household ID this individual belongs to
-	HouseholdID string `json:"household_id,required"`
+	HouseholdID string `json:"household_id" api:"required"`
 	// Whether this client profile should be an eligible beneficiary for entities and
 	// gifts
-	IsBeneficiary bool `json:"is_beneficiary,required"`
+	IsBeneficiary bool `json:"is_beneficiary" api:"required"`
 	// Whether this client profile is deceased
-	IsDeceased bool `json:"is_deceased,required"`
+	IsDeceased bool `json:"is_deceased" api:"required"`
 	// Whether this client profile should be an eligible grantor/owner/other principal
 	// for entities
-	IsGrantor bool `json:"is_grantor,required"`
+	IsGrantor bool `json:"is_grantor" api:"required"`
 	// Whether this is one of the (at most) two primary clients on this household
-	IsPrimary bool `json:"is_primary,required"`
+	IsPrimary bool `json:"is_primary" api:"required"`
 	// Whether this client profile should be an eligible trustee for entities
-	IsTrustee bool `json:"is_trustee,required"`
+	IsTrustee bool `json:"is_trustee" api:"required"`
 	// Last name of the individual
-	LastName string `json:"last_name,required"`
+	LastName string `json:"last_name" api:"required"`
 	// Timestamp when the individual was last updated
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// Street address line 1 (from address edge)
-	AddressLine1 string `json:"address_line1,nullable"`
+	AddressLine1 string `json:"address_line1" api:"nullable"`
 	// Street address line 2 (from address edge)
-	AddressLine2 string `json:"address_line2,nullable"`
+	AddressLine2 string `json:"address_line2" api:"nullable"`
 	// City (from address edge)
-	City string `json:"city,nullable"`
+	City string `json:"city" api:"nullable"`
 	// Country (from address edge)
-	Country string `json:"country,nullable"`
+	Country string `json:"country" api:"nullable"`
 	// Date of birth (encrypted field)
-	DateOfBirth time.Time `json:"date_of_birth,nullable" format:"date"`
+	DateOfBirth time.Time `json:"date_of_birth" api:"nullable" format:"date"`
 	// Date of death if applicable (encrypted field)
-	DateOfDeath time.Time `json:"date_of_death,nullable" format:"date"`
+	DateOfDeath time.Time `json:"date_of_death" api:"nullable" format:"date"`
 	// Timestamp when the individual was soft deleted
-	DeletedAt time.Time `json:"deleted_at,nullable" format:"date-time"`
+	DeletedAt time.Time `json:"deleted_at" api:"nullable" format:"date-time"`
 	// Email address
-	Email string `json:"email,nullable" format:"email"`
+	Email string `json:"email" api:"nullable" format:"email"`
 	// Middle name of the individual
-	MiddleName string `json:"middle_name,nullable"`
+	MiddleName string `json:"middle_name" api:"nullable"`
 	// Notes about the client profile
-	Notes string `json:"notes,nullable"`
+	Notes string `json:"notes" api:"nullable"`
 	// ZIP or postal code (from address edge)
-	PostalCode string `json:"postal_code,nullable"`
+	PostalCode string `json:"postal_code" api:"nullable"`
 	// State or province (from address edge)
-	State string `json:"state,nullable"`
+	State string `json:"state" api:"nullable"`
 	// Name suffix (Jr., Sr., III, etc.)
-	Suffix string `json:"suffix,nullable"`
+	Suffix string `json:"suffix" api:"nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID            respjson.Field
@@ -199,11 +199,11 @@ func (r *Individual) UnmarshalJSON(data []byte) error {
 
 type IndividualNewParams struct {
 	// First name of the individual
-	FirstName string `json:"first_name,required"`
+	FirstName string `json:"first_name" api:"required"`
 	// Household ID this individual belongs to
-	HouseholdID string `json:"household_id,required"`
+	HouseholdID string `json:"household_id" api:"required"`
 	// Last name of the individual
-	LastName string `json:"last_name,required"`
+	LastName string `json:"last_name" api:"required"`
 	// Street address line 1
 	AddressLine1 param.Opt[string] `json:"address_line1,omitzero"`
 	// Street address line 2
