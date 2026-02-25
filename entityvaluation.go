@@ -62,23 +62,23 @@ func (r *EntityValuationService) Get(ctx context.Context, id string, opts ...opt
 
 type Valuation struct {
 	// Unique identifier with valuationv2\_ prefix
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Timestamp when the valuation was created
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// Total value of all directly held assets in USD
-	DirectlyHeldAssetValue float64 `json:"directly_held_asset_value,required"`
+	DirectlyHeldAssetValue float64 `json:"directly_held_asset_value" api:"required"`
 	// List of individual assets in this valuation
-	DirectlyHeldAssets []ValuationDirectlyHeldAsset `json:"directly_held_assets,required"`
+	DirectlyHeldAssets []ValuationDirectlyHeldAsset `json:"directly_held_assets" api:"required"`
 	// The date this valuation is effective
-	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
+	EffectiveDate time.Time `json:"effective_date" api:"required" format:"date"`
 	// Entity ID this valuation belongs to
-	EntityID string `json:"entity_id,required"`
+	EntityID string `json:"entity_id" api:"required"`
 	// Total value of all assets minus liabilities in USD
-	TotalValue float64 `json:"total_value,required"`
+	TotalValue float64 `json:"total_value" api:"required"`
 	// Timestamp when the valuation was last updated
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// Free-form notes about this valuation
-	Description string `json:"description,nullable"`
+	Description string `json:"description" api:"nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID                     respjson.Field
@@ -103,14 +103,14 @@ func (r *Valuation) UnmarshalJSON(data []byte) error {
 
 type ValuationDirectlyHeldAsset struct {
 	// Asset ID
-	ID         string                               `json:"id,required"`
-	AssetClass ValuationDirectlyHeldAssetAssetClass `json:"asset_class,required"`
+	ID         string                               `json:"id" api:"required"`
+	AssetClass ValuationDirectlyHeldAssetAssetClass `json:"asset_class" api:"required"`
 	// Display name of the asset
-	DisplayName string `json:"display_name,required"`
+	DisplayName string `json:"display_name" api:"required"`
 	// Value of this asset in USD
-	Value float64 `json:"value,required"`
+	Value float64 `json:"value" api:"required"`
 	// External ID from the static asset (if available)
-	ExternalID string `json:"external_id,nullable"`
+	ExternalID string `json:"external_id" api:"nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID          respjson.Field
@@ -131,9 +131,9 @@ func (r *ValuationDirectlyHeldAsset) UnmarshalJSON(data []byte) error {
 
 type ValuationDirectlyHeldAssetAssetClass struct {
 	// Asset class ID
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Display name of the asset class
-	DisplayName string `json:"display_name,required"`
+	DisplayName string `json:"display_name" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID          respjson.Field
@@ -151,9 +151,9 @@ func (r *ValuationDirectlyHeldAssetAssetClass) UnmarshalJSON(data []byte) error 
 
 type EntityValuationNewParams struct {
 	// List of assets to include in this valuation
-	DirectlyHeldAssets []EntityValuationNewParamsDirectlyHeldAsset `json:"directly_held_assets,omitzero,required"`
+	DirectlyHeldAssets []EntityValuationNewParamsDirectlyHeldAsset `json:"directly_held_assets,omitzero" api:"required"`
 	// The date this valuation is effective
-	EffectiveDate time.Time `json:"effective_date,required" format:"date"`
+	EffectiveDate time.Time `json:"effective_date" api:"required" format:"date"`
 	// Free-form notes about this valuation
 	Description param.Opt[string] `json:"description,omitzero"`
 	paramObj
@@ -170,11 +170,11 @@ func (r *EntityValuationNewParams) UnmarshalJSON(data []byte) error {
 // The properties AssetClassID, DisplayName, Value are required.
 type EntityValuationNewParamsDirectlyHeldAsset struct {
 	// Asset class ID to associate with this asset
-	AssetClassID string `json:"asset_class_id,required"`
+	AssetClassID string `json:"asset_class_id" api:"required"`
 	// Display name of the asset
-	DisplayName string `json:"display_name,required"`
+	DisplayName string `json:"display_name" api:"required"`
 	// Value of this asset in USD
-	Value float64 `json:"value,required"`
+	Value float64 `json:"value" api:"required"`
 	// External ID for the asset
 	ExternalID param.Opt[string] `json:"external_id,omitzero"`
 	paramObj

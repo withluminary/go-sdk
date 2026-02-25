@@ -138,13 +138,13 @@ func (r *DocumentService) GetSummaries(ctx context.Context, id string, opts ...o
 
 type Document struct {
 	// Unique identifier with document\_ prefix
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Timestamp when the document was created
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// Household ID this document belongs to
-	HouseholdID string `json:"household_id,required"`
+	HouseholdID string `json:"household_id" api:"required"`
 	// Display name of the document
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// Type of document
 	//
 	// Any of "GRAT_DESIGN_SUMMARY", "GENERATED_PRESENTATION", "ASSET_VALUATION",
@@ -161,15 +161,15 @@ type Document struct {
 	// "INSURANCE_POLICY", "CRUMMEY_LETTER", "INSURANCE_PREMIUM_PAYMENT",
 	// "BENEFICIAL_OWNERSHIP_INFORMATION_REPORT", "FINCEN_FILING", "HEALTHCARE_PROXY",
 	// "LIVING_WILL", "DRIVERS_LICENSE", "PASSPORT", "DEED", "OTHER".
-	Type DocumentType `json:"type,required"`
+	Type DocumentType `json:"type" api:"required"`
 	// Timestamp when the document was last updated
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// Whether this document should be used for AI suggestions
 	EnableAISuggestions bool `json:"enable_ai_suggestions"`
 	// Entity ID if this document is owned by an entity
-	EntityID string `json:"entity_id,nullable"`
+	EntityID string `json:"entity_id" api:"nullable"`
 	// Individual ID if this document is associated with an individual
-	IndividualID string `json:"individual_id,nullable"`
+	IndividualID string `json:"individual_id" api:"nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID                  respjson.Field
@@ -193,10 +193,10 @@ func (r *Document) UnmarshalJSON(data []byte) error {
 }
 
 type DocumentList struct {
-	Data     []Document `json:"data,required"`
-	PageInfo PageInfo   `json:"page_info,required"`
+	Data     []Document `json:"data" api:"required"`
+	PageInfo PageInfo   `json:"page_info" api:"required"`
 	// Total number of items matching the query (across all pages)
-	TotalCount int64 `json:"total_count,required"`
+	TotalCount int64 `json:"total_count" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field
@@ -263,7 +263,7 @@ const (
 )
 
 type DocumentGetSummariesResponse struct {
-	Data []DocumentSummary `json:"data,required"`
+	Data []DocumentSummary `json:"data" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field
@@ -280,11 +280,11 @@ func (r *DocumentGetSummariesResponse) UnmarshalJSON(data []byte) error {
 
 type DocumentNewParams struct {
 	// The document file to upload
-	File io.Reader `json:"file,omitzero,required" format:"binary"`
+	File io.Reader `json:"file,omitzero" api:"required" format:"binary"`
 	// Household ID this document belongs to
-	HouseholdID string `json:"household_id,required"`
+	HouseholdID string `json:"household_id" api:"required"`
 	// Display name of the document
-	Name string `json:"name,required"`
+	Name string `json:"name" api:"required"`
 	// Type of document
 	//
 	// Any of "GRAT_DESIGN_SUMMARY", "GENERATED_PRESENTATION", "ASSET_VALUATION",
@@ -301,7 +301,7 @@ type DocumentNewParams struct {
 	// "INSURANCE_POLICY", "CRUMMEY_LETTER", "INSURANCE_PREMIUM_PAYMENT",
 	// "BENEFICIAL_OWNERSHIP_INFORMATION_REPORT", "FINCEN_FILING", "HEALTHCARE_PROXY",
 	// "LIVING_WILL", "DRIVERS_LICENSE", "PASSPORT", "DEED", "OTHER".
-	Type DocumentType `json:"type,omitzero,required"`
+	Type DocumentType `json:"type,omitzero" api:"required"`
 	// Whether this document should be used for AI suggestions
 	EnableAISuggestions param.Opt[bool] `json:"enable_ai_suggestions,omitzero"`
 	// Entity ID if this document is owned by an entity
