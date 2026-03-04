@@ -18,7 +18,7 @@ import (
 )
 
 func TestDocumentNewWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -36,9 +36,9 @@ func TestDocumentNewWithOptionalParams(t *testing.T) {
 		HouseholdID:         "household_01ARZ3NDEKTSV4RRFFQ69G5FAV",
 		Name:                "Trust Agreement.pdf",
 		Type:                withluminary.DocumentTypeGratDesignSummary,
-		ClientProfileID:     withluminary.String("client_profile_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
 		EnableAISuggestions: withluminary.Bool(true),
 		EntityID:            withluminary.String("entity_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
+		IndividualID:        withluminary.String("client_profile_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
 	})
 	if err != nil {
 		var apierr *withluminary.Error
@@ -50,7 +50,7 @@ func TestDocumentNewWithOptionalParams(t *testing.T) {
 }
 
 func TestDocumentGet(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -74,7 +74,7 @@ func TestDocumentGet(t *testing.T) {
 }
 
 func TestDocumentUpdateWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -91,10 +91,10 @@ func TestDocumentUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.DocumentUpdateParams{
-			ClientProfileID:     withluminary.String("client_profile_id"),
 			EnableAISuggestions: withluminary.Bool(true),
 			EntityID:            withluminary.String("entity_id"),
-			Name:                withluminary.String("name"),
+			IndividualID:        withluminary.String("individual_id"),
+			Name:                withluminary.String("x"),
 			Type:                withluminary.DocumentTypeGratDesignSummary,
 		},
 	)
@@ -108,7 +108,7 @@ func TestDocumentUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestDocumentListWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -138,7 +138,7 @@ func TestDocumentListWithOptionalParams(t *testing.T) {
 }
 
 func TestDocumentDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -197,7 +197,7 @@ func TestDocumentDownload(t *testing.T) {
 }
 
 func TestDocumentGetSummaries(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL

@@ -15,7 +15,7 @@ import (
 )
 
 func TestHouseholdNewWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -34,20 +34,20 @@ func TestHouseholdNewWithOptionalParams(t *testing.T) {
 		PrimaryIndividuals: []withluminary.HouseholdNewParamsPrimaryIndividual{{
 			FirstName:     "John",
 			LastName:      "Smith",
-			State:         "state",
-			AddressLine1:  withluminary.String("address_line1"),
-			AddressLine2:  withluminary.String("address_line2"),
-			City:          withluminary.String("city"),
-			Country:       withluminary.String("country"),
+			State:         "xx",
+			AddressLine1:  withluminary.String("x"),
+			AddressLine2:  withluminary.String("x"),
+			City:          withluminary.String("x"),
+			Country:       withluminary.String("x"),
 			DateOfBirth:   withluminary.Time(time.Now()),
 			Email:         withluminary.String("dev@stainless.com"),
 			IsBeneficiary: withluminary.Bool(true),
 			IsDeceased:    withluminary.Bool(true),
 			IsTrustee:     withluminary.Bool(true),
-			MiddleName:    withluminary.String("middle_name"),
+			MiddleName:    withluminary.String("x"),
 			Notes:         withluminary.String("notes"),
-			PostalCode:    withluminary.String("postal_code"),
-			Suffix:        withluminary.String("suffix"),
+			PostalCode:    withluminary.String("x"),
+			Suffix:        withluminary.String("x"),
 		}},
 	})
 	if err != nil {
@@ -60,7 +60,7 @@ func TestHouseholdNewWithOptionalParams(t *testing.T) {
 }
 
 func TestHouseholdGet(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -84,7 +84,7 @@ func TestHouseholdGet(t *testing.T) {
 }
 
 func TestHouseholdUpdateWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -115,7 +115,7 @@ func TestHouseholdUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestHouseholdListWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -143,7 +143,7 @@ func TestHouseholdListWithOptionalParams(t *testing.T) {
 }
 
 func TestHouseholdDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -167,7 +167,7 @@ func TestHouseholdDelete(t *testing.T) {
 }
 
 func TestHouseholdListDocumentsWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -200,7 +200,7 @@ func TestHouseholdListDocumentsWithOptionalParams(t *testing.T) {
 }
 
 func TestHouseholdListEntitiesWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -233,7 +233,7 @@ func TestHouseholdListEntitiesWithOptionalParams(t *testing.T) {
 }
 
 func TestHouseholdListIndividualsWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL

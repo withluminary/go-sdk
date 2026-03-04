@@ -93,13 +93,17 @@ func (r *EntityService) Delete(ctx context.Context, id string, opts ...option.Re
 
 type Entity struct {
 	// Unique identifier with entity\_ prefix
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Timestamp when the entity was created
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// Display name of the entity
-	DisplayName string `json:"display_name,required"`
+	DisplayName string `json:"display_name" api:"required"`
 	// Household ID this entity belongs to
-	HouseholdID string `json:"household_id,required"`
+	HouseholdID string `json:"household_id" api:"required"`
+	// Whether the entity is in or out of the estate
+	//
+	// Any of "in_estate", "out_of_estate", "none".
+	InEstateStatus EntityInEstateStatus `json:"in_estate_status" api:"required"`
 	// Type of entity - determines the specific subtype and applicable fields
 	//
 	// Any of "REVOCABLE_TRUST", "IRREVOCABLE_TRUST", "SLAT_TRUST", "ILIT_TRUST",
@@ -111,26 +115,27 @@ type Entity struct {
 	// "LP_BUSINESS_ENTITY", "GP_BUSINESS_ENTITY",
 	// "SOLE_PROPRIETORSHIP_BUSINESS_ENTITY", "SCORP_BUSINESS_ENTITY",
 	// "CCORP_BUSINESS_ENTITY".
-	Kind EntityKind `json:"kind,required"`
+	Kind EntityKind `json:"kind" api:"required"`
 	// Lifecycle stage of the entity
 	//
 	// Any of "PRE_CREATED", "AI_CREATING", "AI_CREATION_FAILED", "AI_NEEDS_REVIEW",
 	// "DRAFT", "READY_FOR_PROPOSAL", "IMPLEMENTATION", "ACTIVE", "COMPLETED",
 	// "ARCHIVED".
-	Stage EntityStage `json:"stage,required"`
+	Stage EntityStage `json:"stage" api:"required"`
 	// Timestamp when the entity was last updated
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		ID          respjson.Field
-		CreatedAt   respjson.Field
-		DisplayName respjson.Field
-		HouseholdID respjson.Field
-		Kind        respjson.Field
-		Stage       respjson.Field
-		UpdatedAt   respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
+		ID             respjson.Field
+		CreatedAt      respjson.Field
+		DisplayName    respjson.Field
+		HouseholdID    respjson.Field
+		InEstateStatus respjson.Field
+		Kind           respjson.Field
+		Stage          respjson.Field
+		UpdatedAt      respjson.Field
+		ExtraFields    map[string]respjson.Field
+		raw            string
 	} `json:"-"`
 }
 
@@ -139,6 +144,15 @@ func (r Entity) RawJSON() string { return r.JSON.raw }
 func (r *Entity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
+
+// Whether the entity is in or out of the estate
+type EntityInEstateStatus string
+
+const (
+	EntityInEstateStatusInEstate    EntityInEstateStatus = "in_estate"
+	EntityInEstateStatusOutOfEstate EntityInEstateStatus = "out_of_estate"
+	EntityInEstateStatusNone        EntityInEstateStatus = "none"
+)
 
 // Lifecycle stage of the entity
 type EntityStage string
@@ -185,10 +199,10 @@ const (
 )
 
 type EntityList struct {
-	Data     []Entity `json:"data,required"`
-	PageInfo PageInfo `json:"page_info,required"`
+	Data     []Entity `json:"data" api:"required"`
+	PageInfo PageInfo `json:"page_info" api:"required"`
 	// Total number of items matching the query (across all pages)
-	TotalCount int64 `json:"total_count,required"`
+	TotalCount int64 `json:"total_count" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field

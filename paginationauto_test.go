@@ -13,6 +13,7 @@ import (
 )
 
 func TestAutoPagination(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -26,7 +27,7 @@ func TestAutoPagination(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	iter := client.Households.ListAutoPaging(context.TODO(), withluminary.HouseholdListParams{})
-	// Prism mock isn't going to give us real pagination
+	// The mock server isn't going to give us real pagination
 	for i := 0; i < 3 && iter.Next(); i++ {
 		household := iter.Current()
 		t.Logf("%+v\n", household.ID)

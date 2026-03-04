@@ -192,17 +192,17 @@ func (r *HouseholdService) ListIndividualsAutoPaging(ctx context.Context, id str
 
 type Household struct {
 	// Unique identifier with household\_ prefix
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Timestamp when the household was created
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// User ID of the primary relationship owner
-	PrimaryRelationshipOwnerID string `json:"primary_relationship_owner_id,required"`
+	PrimaryRelationshipOwnerID string `json:"primary_relationship_owner_id" api:"required"`
 	// Timestamp when the household was last updated
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// Display name for the household
 	Name string `json:"name"`
 	// Notes about the household
-	Notes string `json:"notes,nullable"`
+	Notes string `json:"notes" api:"nullable"`
 	// Primary client profiles for this household (at most 2)
 	PrimaryIndividuals []Individual `json:"primary_individuals"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -226,10 +226,10 @@ func (r *Household) UnmarshalJSON(data []byte) error {
 }
 
 type IndividualList struct {
-	Data     []Individual `json:"data,required"`
-	PageInfo PageInfo     `json:"page_info,required"`
+	Data     []Individual `json:"data" api:"required"`
+	PageInfo PageInfo     `json:"page_info" api:"required"`
 	// Total number of items matching the query (across all pages)
-	TotalCount int64 `json:"total_count,required"`
+	TotalCount int64 `json:"total_count" api:"required"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field
@@ -248,7 +248,7 @@ func (r *IndividualList) UnmarshalJSON(data []byte) error {
 
 type HouseholdNewParams struct {
 	// User ID of the primary relationship owner
-	PrimaryRelationshipOwnerID string `json:"primary_relationship_owner_id,required"`
+	PrimaryRelationshipOwnerID string `json:"primary_relationship_owner_id" api:"required"`
 	// Optional notes about the household
 	Notes param.Opt[string] `json:"notes,omitzero"`
 	// Primary client profiles to create for this household (at most 2)
@@ -267,11 +267,11 @@ func (r *HouseholdNewParams) UnmarshalJSON(data []byte) error {
 // The properties FirstName, LastName, State are required.
 type HouseholdNewParamsPrimaryIndividual struct {
 	// First name of the individual
-	FirstName string `json:"first_name,required"`
+	FirstName string `json:"first_name" api:"required"`
 	// Last name of the individual
-	LastName string `json:"last_name,required"`
-	// State or province
-	State string `json:"state,required"`
+	LastName string `json:"last_name" api:"required"`
+	// State or province code (2 letter code)
+	State string `json:"state" api:"required"`
 	// Street address line 1
 	AddressLine1 param.Opt[string] `json:"address_line1,omitzero"`
 	// Street address line 2

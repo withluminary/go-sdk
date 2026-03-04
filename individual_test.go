@@ -15,7 +15,7 @@ import (
 )
 
 func TestIndividualNewWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -32,10 +32,10 @@ func TestIndividualNewWithOptionalParams(t *testing.T) {
 		FirstName:     "John",
 		HouseholdID:   "household_01ARZ3NDEKTSV4RRFFQ69G5FAV",
 		LastName:      "Smith",
-		AddressLine1:  withluminary.String("address_line1"),
-		AddressLine2:  withluminary.String("address_line2"),
-		City:          withluminary.String("city"),
-		Country:       withluminary.String("country"),
+		AddressLine1:  withluminary.String("x"),
+		AddressLine2:  withluminary.String("x"),
+		City:          withluminary.String("x"),
+		Country:       withluminary.String("x"),
 		DateOfBirth:   withluminary.Time(time.Now()),
 		Email:         withluminary.String("dev@stainless.com"),
 		IsBeneficiary: withluminary.Bool(true),
@@ -43,11 +43,11 @@ func TestIndividualNewWithOptionalParams(t *testing.T) {
 		IsGrantor:     withluminary.Bool(true),
 		IsPrimary:     withluminary.Bool(true),
 		IsTrustee:     withluminary.Bool(true),
-		MiddleName:    withluminary.String("middle_name"),
+		MiddleName:    withluminary.String("x"),
 		Notes:         withluminary.String("notes"),
-		PostalCode:    withluminary.String("postal_code"),
-		State:         withluminary.String("state"),
-		Suffix:        withluminary.String("suffix"),
+		PostalCode:    withluminary.String("x"),
+		State:         withluminary.String("xx"),
+		Suffix:        withluminary.String("x"),
 	})
 	if err != nil {
 		var apierr *withluminary.Error
@@ -59,7 +59,7 @@ func TestIndividualNewWithOptionalParams(t *testing.T) {
 }
 
 func TestIndividualGet(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -83,7 +83,7 @@ func TestIndividualGet(t *testing.T) {
 }
 
 func TestIndividualUpdateWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -100,25 +100,25 @@ func TestIndividualUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.IndividualUpdateParams{
-			AddressLine1:  withluminary.String("address_line1"),
-			AddressLine2:  withluminary.String("address_line2"),
-			City:          withluminary.String("city"),
-			Country:       withluminary.String("country"),
+			AddressLine1:  withluminary.String("x"),
+			AddressLine2:  withluminary.String("x"),
+			City:          withluminary.String("x"),
+			Country:       withluminary.String("x"),
 			DateOfBirth:   withluminary.Time(time.Now()),
 			DateOfDeath:   withluminary.Time(time.Now()),
 			Email:         withluminary.String("dev@stainless.com"),
-			FirstName:     withluminary.String("first_name"),
+			FirstName:     withluminary.String("x"),
 			IsBeneficiary: withluminary.Bool(true),
 			IsDeceased:    withluminary.Bool(true),
 			IsGrantor:     withluminary.Bool(true),
 			IsPrimary:     withluminary.Bool(true),
 			IsTrustee:     withluminary.Bool(true),
-			LastName:      withluminary.String("last_name"),
-			MiddleName:    withluminary.String("middle_name"),
+			LastName:      withluminary.String("x"),
+			MiddleName:    withluminary.String("x"),
 			Notes:         withluminary.String("notes"),
-			PostalCode:    withluminary.String("postal_code"),
-			State:         withluminary.String("state"),
-			Suffix:        withluminary.String("suffix"),
+			PostalCode:    withluminary.String("x"),
+			State:         withluminary.String("xx"),
+			Suffix:        withluminary.String("x"),
 		},
 	)
 	if err != nil {
@@ -131,7 +131,7 @@ func TestIndividualUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestIndividualListWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -161,7 +161,7 @@ func TestIndividualListWithOptionalParams(t *testing.T) {
 }
 
 func TestIndividualDelete(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL

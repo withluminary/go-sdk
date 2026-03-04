@@ -101,19 +101,19 @@ func (r *DocumentSummaryService) Download(ctx context.Context, id string, query 
 
 type DocumentSummary struct {
 	// Unique identifier for the document summary
-	ID string `json:"id,required"`
+	ID string `json:"id" api:"required"`
 	// Timestamp when the summary was created
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
 	// Display name for the summary
-	DisplayName string `json:"display_name,required"`
+	DisplayName string `json:"display_name" api:"required"`
 	// ID of the document this summary belongs to
-	DocumentID string `json:"document_id,required"`
+	DocumentID string `json:"document_id" api:"required"`
 	// ID of the household this summary belongs to
-	HouseholdID string `json:"household_id,required"`
+	HouseholdID string `json:"household_id" api:"required"`
 	// The summary text content
-	Summary string `json:"summary,required"`
+	Summary string `json:"summary" api:"required"`
 	// Timestamp when the summary was last updated
-	UpdatedAt time.Time `json:"updated_at,required" format:"date-time"`
+	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
 	// Indicates if the summary was AI-generated or user-entered
 	//
 	// Any of "AI_AUTO", "USER".
@@ -162,13 +162,13 @@ const (
 
 type PageInfo struct {
 	// When paginating forwards, are there more items?
-	HasNextPage bool `json:"has_next_page,required"`
+	HasNextPage bool `json:"has_next_page" api:"required"`
 	// When paginating backwards, are there more items?
-	HasPreviousPage bool `json:"has_previous_page,required"`
+	HasPreviousPage bool `json:"has_previous_page" api:"required"`
 	// Cursor pointing to the last item in the current page
-	EndCursor string `json:"end_cursor,nullable"`
+	EndCursor string `json:"end_cursor" api:"nullable"`
 	// Cursor pointing to the first item in the current page
-	StartCursor string `json:"start_cursor,nullable"`
+	StartCursor string `json:"start_cursor" api:"nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		HasNextPage     respjson.Field

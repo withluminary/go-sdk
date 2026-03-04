@@ -18,7 +18,7 @@ import (
 )
 
 func TestDocumentSummaryGet(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -42,7 +42,7 @@ func TestDocumentSummaryGet(t *testing.T) {
 }
 
 func TestDocumentSummaryUpdateWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -59,7 +59,7 @@ func TestDocumentSummaryUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.DocumentSummaryUpdateParams{
-			DisplayName:   withluminary.String("display_name"),
+			DisplayName:   withluminary.String("x"),
 			EntryMode:     withluminary.DocumentSummaryEntryModeAIAuto,
 			Summary:       withluminary.String("summary"),
 			SummaryFormat: withluminary.DocumentSummaryFormatMarkdown,
@@ -75,7 +75,7 @@ func TestDocumentSummaryUpdateWithOptionalParams(t *testing.T) {
 }
 
 func TestDocumentSummaryListWithOptionalParams(t *testing.T) {
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL

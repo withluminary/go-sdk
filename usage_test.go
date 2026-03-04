@@ -25,7 +25,7 @@ func TestUsage(t *testing.T) {
 		option.WithClientID("My Client ID"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	t.Skip("Prism tests are disabled")
+	t.Skip("Mock server tests are disabled")
 	page, err := client.Households.List(context.TODO(), withluminary.HouseholdListParams{})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
