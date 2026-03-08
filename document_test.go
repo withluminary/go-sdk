@@ -32,7 +32,7 @@ func TestDocumentNewWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Documents.New(context.TODO(), withluminary.DocumentNewParams{
-		File:                io.Reader(bytes.NewBuffer([]byte("some file contents"))),
+		File:                io.Reader(bytes.NewBuffer([]byte("Example data"))),
 		HouseholdID:         "household_01ARZ3NDEKTSV4RRFFQ69G5FAV",
 		Name:                "Trust Agreement.pdf",
 		Type:                withluminary.DocumentTypeGratDesignSummary,
