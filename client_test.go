@@ -39,7 +39,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Households.List(context.Background(), withluminary.HouseholdListParams{})
+	_, _ = client.Households.List(context.Background(), withluminary.HouseholdListParams{})
 	if userAgent != fmt.Sprintf("Luminary/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
