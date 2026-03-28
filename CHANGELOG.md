@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.4.0 (2026-03-28)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/withluminary/go-sdk/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **internal:** support comma format in multipart form encoding ([a1e7304](https://github.com/withluminary/go-sdk/commit/a1e73041f22085b2831dd0d12768298d76101680))
+
+
+### Bug Fixes
+
+* prevent duplicate ? in query params ([d04f903](https://github.com/withluminary/go-sdk/commit/d04f9039bbedf89989498cb93c8572f339512f65))
+* **tests:** prevent tests failing due to making unnecessary OAuth token requests ([4b2b000](https://github.com/withluminary/go-sdk/commit/4b2b000e6cb1a1d680fee61a45bbff2e0605ca81))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([20b7fb1](https://github.com/withluminary/go-sdk/commit/20b7fb19fe5c7d77b2e0338d86710f5bf0686170))
+* **ci:** skip uploading artifacts on stainless-internal branches ([1cd1dfb](https://github.com/withluminary/go-sdk/commit/1cd1dfb29fc909d827b2d682edc07f8df3855d55))
+* **ci:** support opting out of skipping builds on metadata-only commits ([2b5595c](https://github.com/withluminary/go-sdk/commit/2b5595c2d8ce869a08b688e0d94abbc7362af06d))
+* **client:** fix multipart serialisation of Default() fields ([51c2566](https://github.com/withluminary/go-sdk/commit/51c2566a3ed9bd6250014b37246994df5c36f074))
+* **internal:** codegen related update ([d052c29](https://github.com/withluminary/go-sdk/commit/d052c29016722ef940f5838b8b78cb8f2d4e6363))
+* **internal:** minor cleanup ([6cbe3d3](https://github.com/withluminary/go-sdk/commit/6cbe3d37fafa1512c5abdd990b46762d17dbe4e2))
+* **internal:** support default value struct tag ([9dd077a](https://github.com/withluminary/go-sdk/commit/9dd077ab66f3a747ae045c895bc64050b52dc605))
+* **internal:** tweak CI branches ([41888c5](https://github.com/withluminary/go-sdk/commit/41888c52ba2c6847e25111b7478b6d21b1b47fcd))
+* **internal:** update gitignore ([1f5298b](https://github.com/withluminary/go-sdk/commit/1f5298bed195884d48cb1572ce9319dd1d45f6d7))
+* **internal:** use explicit returns ([54eaa5a](https://github.com/withluminary/go-sdk/commit/54eaa5ad2b0db6d1055ccd6e5288d9e46bc8a556))
+* **internal:** use explicit returns in more places ([8fcf61b](https://github.com/withluminary/go-sdk/commit/8fcf61b8f3c5268476aa0c25503b85d65670cb90))
+* remove unnecessary error check for url parsing ([9304cc8](https://github.com/withluminary/go-sdk/commit/9304cc838cfc671291563222fb20d80b350cfeed))
+* update docs for api:"required" ([017a902](https://github.com/withluminary/go-sdk/commit/017a902c3704db9479bf24bedfbc580a6e49c091))
+* update placeholder string ([093b778](https://github.com/withluminary/go-sdk/commit/093b778660db9656a4f45431da42c2bbc84da869))
+
 ## 0.3.0 (2026-03-04)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/withluminary/go-sdk/compare/v0.2.0...v0.3.0)
