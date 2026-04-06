@@ -13,6 +13,7 @@ import (
 )
 
 func TestUsage(t *testing.T) {
+	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +26,6 @@ func TestUsage(t *testing.T) {
 		option.WithClientID("My Client ID"),
 		option.WithClientSecret("My Client Secret"),
 	)
-	t.Skip("Mock server tests are disabled")
 	page, err := client.Households.List(context.TODO(), withluminary.HouseholdListParams{})
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
