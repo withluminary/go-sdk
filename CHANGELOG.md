@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 (2026-04-23)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/withluminary/go-sdk/compare/v0.4.0...v0.4.1)
+
+### Chores
+
+* **internal:** more robust bootstrap script ([5d17ff7](https://github.com/withluminary/go-sdk/commit/5d17ff7a2bfe96eef2b64137788c4ee950ff2280))
+
 ## 0.4.0 (2026-03-28)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/withluminary/go-sdk/compare/v0.3.0...v0.4.0)
