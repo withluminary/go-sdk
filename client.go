@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"slices"
+	"strings"
 
 	"github.com/withluminary/go-sdk/internal/requestconfig"
 	"github.com/withluminary/go-sdk/option"
@@ -42,6 +43,14 @@ func DefaultClientOptions() []option.RequestOption {
 	}
 	if o, ok := os.LookupEnv("WITHLUMINARY_SUBDOMAIN"); ok {
 		defaults = append(defaults, option.WithSubdomain(o))
+	}
+	if o, ok := os.LookupEnv("LUMINARY_CUSTOM_HEADERS"); ok {
+		for _, line := range strings.Split(o, "\n") {
+			colon := strings.Index(line, ":")
+			if colon >= 0 {
+				defaults = append(defaults, option.WithHeader(strings.TrimSpace(line[:colon]), strings.TrimSpace(line[colon+1:])))
+			}
+		}
 	}
 	return defaults
 }
