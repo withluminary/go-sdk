@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 (2026-04-30)
+
+Full Changelog: [v0.4.1...v0.5.0](https://github.com/withluminary/go-sdk/compare/v0.4.1...v0.5.0)
+
+### Features
+
+* **go:** add default http client with timeout ([d73643b](https://github.com/withluminary/go-sdk/commit/d73643b6cfd9c158bc79257bd9713ac53bcde3a9))
+* support setting headers via env ([822f071](https://github.com/withluminary/go-sdk/commit/822f071679a720690c2221b22ea8fba0021ff1dc))
+
 ## 0.4.1 (2026-04-23)
 
 Full Changelog: [v0.4.0...v0.4.1](https://github.com/withluminary/go-sdk/compare/v0.4.0...v0.4.1)
