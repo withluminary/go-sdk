@@ -199,6 +199,9 @@ type Household struct {
 	PrimaryRelationshipOwnerID string `json:"primary_relationship_owner_id" api:"required"`
 	// Timestamp when the household was last updated
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
+	// Customer-supplied identifier from an external system. Unique within the caller's
+	// tenant when set.
+	ExternalID string `json:"external_id" api:"nullable"`
 	// Display name for the household
 	Name string `json:"name"`
 	// Notes about the household
@@ -211,6 +214,7 @@ type Household struct {
 		CreatedAt                  respjson.Field
 		PrimaryRelationshipOwnerID respjson.Field
 		UpdatedAt                  respjson.Field
+		ExternalID                 respjson.Field
 		Name                       respjson.Field
 		Notes                      respjson.Field
 		PrimaryIndividuals         respjson.Field
@@ -249,6 +253,9 @@ func (r *IndividualList) UnmarshalJSON(data []byte) error {
 type HouseholdNewParams struct {
 	// User ID of the primary relationship owner
 	PrimaryRelationshipOwnerID string `json:"primary_relationship_owner_id" api:"required"`
+	// Customer-supplied identifier from an external system. Unique within the caller's
+	// tenant when set.
+	ExternalID param.Opt[string] `json:"external_id,omitzero"`
 	// Optional notes about the household
 	Notes param.Opt[string] `json:"notes,omitzero"`
 	// Primary client profiles to create for this household (at most 2)
@@ -311,6 +318,9 @@ func (r *HouseholdNewParamsPrimaryIndividual) UnmarshalJSON(data []byte) error {
 }
 
 type HouseholdUpdateParams struct {
+	// Customer-supplied identifier from an external system. Unique within the caller's
+	// tenant when set. Send null to clear.
+	ExternalID param.Opt[string] `json:"external_id,omitzero"`
 	// Notes about the household
 	Notes param.Opt[string] `json:"notes,omitzero"`
 	// User ID of the primary relationship owner
@@ -331,6 +341,8 @@ type HouseholdListParams struct {
 	After param.Opt[string] `query:"after,omitzero" json:"-"`
 	// Cursor for backward pagination. Returns items before this cursor.
 	Before param.Opt[string] `query:"before,omitzero" json:"-"`
+	// Filter by external ID (exact match within the caller's tenant)
+	ExternalID param.Opt[string] `query:"external_id,omitzero" json:"-"`
 	// Maximum number of items to return
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	paramObj

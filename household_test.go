@@ -30,6 +30,7 @@ func TestHouseholdNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Households.New(context.TODO(), withluminary.HouseholdNewParams{
 		PrimaryRelationshipOwnerID: "user_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+		ExternalID:                 withluminary.String("crm-household-12345"),
 		Notes:                      withluminary.String("notes"),
 		PrimaryIndividuals: []withluminary.HouseholdNewParamsPrimaryIndividual{{
 			FirstName:     "John",
@@ -101,6 +102,7 @@ func TestHouseholdUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.HouseholdUpdateParams{
+			ExternalID:                 withluminary.String("crm-household-12345"),
 			Notes:                      withluminary.String("notes"),
 			PrimaryRelationshipOwnerID: withluminary.String("user_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
 		},
@@ -129,9 +131,10 @@ func TestHouseholdListWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Households.List(context.TODO(), withluminary.HouseholdListParams{
-		After:  withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
-		Before: withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
-		Limit:  withluminary.Int(1),
+		After:      withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+		Before:     withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+		ExternalID: withluminary.String("x"),
+		Limit:      withluminary.Int(1),
 	})
 	if err != nil {
 		var apierr *withluminary.Error
