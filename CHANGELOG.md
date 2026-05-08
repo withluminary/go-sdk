@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.6.0 (2026-05-08)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/withluminary/go-sdk/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **publicapi:** add external_id to households and entities ([ef9aaa8](https://github.com/withluminary/go-sdk/commit/ef9aaa82a8faf43a78d055645ba6c027ca465f05))
+
+
+### Bug Fixes
+
+* **go:** avoid panic when http.DefaultTransport is wrapped ([b4c8ca5](https://github.com/withluminary/go-sdk/commit/b4c8ca5e8d92bd63af144053553e4de2f1b8aa7d))
+
+
+### Chores
+
+* avoid embedding reflect.Type for dead code elimination ([8586f65](https://github.com/withluminary/go-sdk/commit/8586f6542f699a004f1ce3a2782ea0d80fb02574))
+* redact api-key headers in debug logs ([d3d3b87](https://github.com/withluminary/go-sdk/commit/d3d3b87f95a67e7b171808deb39418146bd73e46))
+
 ## 0.5.0 (2026-04-30)
 
 Full Changelog: [v0.4.1...v0.5.0](https://github.com/withluminary/go-sdk/compare/v0.4.1...v0.5.0)

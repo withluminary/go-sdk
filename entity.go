@@ -124,6 +124,9 @@ type Entity struct {
 	Stage EntityStage `json:"stage" api:"required"`
 	// Timestamp when the entity was last updated
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
+	// Customer-supplied identifier from an external system. Unique within the caller's
+	// tenant when set.
+	ExternalID string `json:"external_id" api:"nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID             respjson.Field
@@ -134,6 +137,7 @@ type Entity struct {
 		Kind           respjson.Field
 		Stage          respjson.Field
 		UpdatedAt      respjson.Field
+		ExternalID     respjson.Field
 		ExtraFields    map[string]respjson.Field
 		raw            string
 	} `json:"-"`
@@ -224,6 +228,8 @@ type EntityListParams struct {
 	After param.Opt[string] `query:"after,omitzero" json:"-"`
 	// Cursor for backward pagination. Returns items before this cursor.
 	Before param.Opt[string] `query:"before,omitzero" json:"-"`
+	// Filter by external ID (exact match within the caller's tenant)
+	ExternalID param.Opt[string] `query:"external_id,omitzero" json:"-"`
 	// Filter entities by household ID
 	HouseholdID param.Opt[string] `query:"household_id,omitzero" json:"-"`
 	// Maximum number of items to return

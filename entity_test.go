@@ -54,6 +54,7 @@ func TestEntityListWithOptionalParams(t *testing.T) {
 	_, err := client.Entities.List(context.TODO(), withluminary.EntityListParams{
 		After:       withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
 		Before:      withluminary.String("eyJpZCI6ImhvdXNlaG9sZF8wMUFSWjNOREVLVFNWNFJSRkZRNjlHNUZBViJ9"),
+		ExternalID:  withluminary.String("x"),
 		HouseholdID: withluminary.String("household_id"),
 		Kind:        withluminary.EntityKindRevocableTrust,
 		Limit:       withluminary.Int(1),
