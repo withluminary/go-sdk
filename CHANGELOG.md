@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0 (2026-07-18)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/withluminary/go-sdk/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([d0aabce](https://github.com/withluminary/go-sdk/commit/d0aabce764c37e18655fa77c4c918fdaf8920678))
+
 ## 0.7.0 (2026-05-14)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/withluminary/go-sdk/compare/v0.6.0...v0.7.0)
