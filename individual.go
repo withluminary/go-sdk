@@ -310,7 +310,7 @@ type IndividualListParams struct {
 	HouseholdID param.Opt[string] `query:"household_id,omitzero" json:"-"`
 	// Filter by primary client status
 	IsPrimary param.Opt[bool] `query:"is_primary,omitzero" json:"-"`
-	// Maximum number of items to return
+	// Maximum number of items to return per page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	paramObj
 }

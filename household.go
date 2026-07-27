@@ -343,7 +343,7 @@ type HouseholdListParams struct {
 	Before param.Opt[string] `query:"before,omitzero" json:"-"`
 	// Filter by external ID (exact match within the caller's tenant)
 	ExternalID param.Opt[string] `query:"external_id,omitzero" json:"-"`
-	// Maximum number of items to return
+	// Maximum number of items to return per page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	paramObj
 }
@@ -361,7 +361,7 @@ type HouseholdListDocumentsParams struct {
 	After param.Opt[string] `query:"after,omitzero" json:"-"`
 	// Cursor for backward pagination. Returns items before this cursor.
 	Before param.Opt[string] `query:"before,omitzero" json:"-"`
-	// Maximum number of items to return
+	// Maximum number of items to return per page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	// Filter by document type
 	//
@@ -397,7 +397,7 @@ type HouseholdListEntitiesParams struct {
 	After param.Opt[string] `query:"after,omitzero" json:"-"`
 	// Cursor for backward pagination. Returns items before this cursor.
 	Before param.Opt[string] `query:"before,omitzero" json:"-"`
-	// Maximum number of items to return
+	// Maximum number of items to return per page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	// Filter by entity kind/type
 	//
@@ -430,7 +430,7 @@ type HouseholdListIndividualsParams struct {
 	Before param.Opt[string] `query:"before,omitzero" json:"-"`
 	// Filter by primary client status
 	IsPrimary param.Opt[bool] `query:"is_primary,omitzero" json:"-"`
-	// Maximum number of items to return
+	// Maximum number of items to return per page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	paramObj
 }

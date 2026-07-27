@@ -232,7 +232,7 @@ type EntityListParams struct {
 	ExternalID param.Opt[string] `query:"external_id,omitzero" json:"-"`
 	// Filter entities by household ID
 	HouseholdID param.Opt[string] `query:"household_id,omitzero" json:"-"`
-	// Maximum number of items to return
+	// Maximum number of items to return per page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	// Filter by entity kind/type
 	//

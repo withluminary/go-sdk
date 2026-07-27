@@ -373,7 +373,7 @@ type DocumentListParams struct {
 	Before param.Opt[string] `query:"before,omitzero" json:"-"`
 	// Filter documents by household ID
 	HouseholdID param.Opt[string] `query:"household_id,omitzero" json:"-"`
-	// Maximum number of items to return
+	// Maximum number of items to return per page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	// Filter by document type
 	//
