@@ -111,7 +111,7 @@ type UserListParams struct {
 	After param.Opt[string] `query:"after,omitzero" json:"-"`
 	// Cursor for backward pagination. Returns items before this cursor.
 	Before param.Opt[string] `query:"before,omitzero" json:"-"`
-	// Maximum number of items to return
+	// Maximum number of items to return per page.
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	paramObj
 }
