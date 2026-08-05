@@ -118,9 +118,8 @@ type Entity struct {
 	Kind EntityKind `json:"kind" api:"required"`
 	// Lifecycle stage of the entity
 	//
-	// Any of "PRE_CREATED", "AI_CREATING", "AI_CREATION_FAILED", "AI_NEEDS_REVIEW",
-	// "DRAFT", "READY_FOR_PROPOSAL", "IMPLEMENTATION", "ACTIVE", "COMPLETED",
-	// "ARCHIVED".
+	// Any of "PRE_CREATED", "DRAFT", "READY_FOR_PROPOSAL", "IMPLEMENTATION", "ACTIVE",
+	// "COMPLETED", "ARCHIVED".
 	Stage EntityStage `json:"stage" api:"required"`
 	// Timestamp when the entity was last updated
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
@@ -163,9 +162,6 @@ type EntityStage string
 
 const (
 	EntityStagePreCreated       EntityStage = "PRE_CREATED"
-	EntityStageAICreating       EntityStage = "AI_CREATING"
-	EntityStageAICreationFailed EntityStage = "AI_CREATION_FAILED"
-	EntityStageAINeedsReview    EntityStage = "AI_NEEDS_REVIEW"
 	EntityStageDraft            EntityStage = "DRAFT"
 	EntityStageReadyForProposal EntityStage = "READY_FOR_PROPOSAL"
 	EntityStageImplementation   EntityStage = "IMPLEMENTATION"
