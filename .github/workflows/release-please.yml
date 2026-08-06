@@ -1,0 +1,30 @@
+name: Release Please
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    if: github.repository == 'withluminary/go-sdk'
+    runs-on: ubuntu-latest
+
+    steps:
+      # Mint a short-lived token from the stlc GitHub App instead of a static PAT
+      # (RELEASE_PLEASE_TOKEN). An App token is a non-GITHUB_TOKEN, so the release it
+      # creates still triggers the publish workflow. Requires the App to have contents +
+      # pull-requests write, and STLC_APP_ID / STLC_APP_PRIVATE_KEY available to this repo.
+      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3
+        id: app-token
+        with:
+          app-id: ${{ vars.STLC_APP_ID }}
+          private-key: ${{ secrets.STLC_APP_PRIVATE_KEY }}
+
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4.4.1
+        id: release
+        with:
+          token: ${{ steps.app-token.outputs.token }}
