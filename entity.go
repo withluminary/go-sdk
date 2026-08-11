@@ -119,7 +119,7 @@ type Entity struct {
 	// Lifecycle stage of the entity
 	//
 	// Any of "PRE_CREATED", "DRAFT", "READY_FOR_PROPOSAL", "IMPLEMENTATION", "ACTIVE",
-	// "COMPLETED", "ARCHIVED".
+	// "COMPLETED".
 	Stage EntityStage `json:"stage" api:"required"`
 	// Timestamp when the entity was last updated
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
@@ -167,7 +167,6 @@ const (
 	EntityStageImplementation   EntityStage = "IMPLEMENTATION"
 	EntityStageActive           EntityStage = "ACTIVE"
 	EntityStageCompleted        EntityStage = "COMPLETED"
-	EntityStageArchived         EntityStage = "ARCHIVED"
 )
 
 // Type of entity - determines the specific subtype and applicable fields
