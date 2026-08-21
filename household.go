@@ -299,13 +299,8 @@ type HouseholdNewParamsPrimaryIndividual struct {
 	PostalCode param.Opt[string] `json:"postal_code,omitzero"`
 	// Name suffix
 	Suffix param.Opt[string] `json:"suffix,omitzero"`
-	// Whether this client profile should be an eligible beneficiary for entities and
-	// gifts
-	IsBeneficiary param.Opt[bool] `json:"is_beneficiary,omitzero"`
 	// Whether the individual is deceased
 	IsDeceased param.Opt[bool] `json:"is_deceased,omitzero"`
-	// Whether this client profile should be an eligible trustee for entities
-	IsTrustee param.Opt[bool] `json:"is_trustee,omitzero"`
 	paramObj
 }
 
