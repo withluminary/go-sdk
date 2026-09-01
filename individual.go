@@ -118,9 +118,6 @@ type Individual struct {
 	FirstName string `json:"first_name" api:"required"`
 	// Household ID this individual belongs to
 	HouseholdID string `json:"household_id" api:"required"`
-	// Whether this client profile should be an eligible beneficiary for entities and
-	// gifts
-	IsBeneficiary bool `json:"is_beneficiary" api:"required"`
 	// Whether this client profile is deceased
 	IsDeceased bool `json:"is_deceased" api:"required"`
 	// Whether this client profile should be an eligible grantor/owner/other principal
@@ -128,8 +125,6 @@ type Individual struct {
 	IsGrantor bool `json:"is_grantor" api:"required"`
 	// Whether this is one of the (at most) two primary clients on this household
 	IsPrimary bool `json:"is_primary" api:"required"`
-	// Whether this client profile should be an eligible trustee for entities
-	IsTrustee bool `json:"is_trustee" api:"required"`
 	// Last name of the individual
 	LastName string `json:"last_name" api:"required"`
 	// Timestamp when the individual was last updated
@@ -162,32 +157,30 @@ type Individual struct {
 	Suffix string `json:"suffix" api:"nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		ID            respjson.Field
-		CreatedAt     respjson.Field
-		FirstName     respjson.Field
-		HouseholdID   respjson.Field
-		IsBeneficiary respjson.Field
-		IsDeceased    respjson.Field
-		IsGrantor     respjson.Field
-		IsPrimary     respjson.Field
-		IsTrustee     respjson.Field
-		LastName      respjson.Field
-		UpdatedAt     respjson.Field
-		AddressLine1  respjson.Field
-		AddressLine2  respjson.Field
-		City          respjson.Field
-		Country       respjson.Field
-		DateOfBirth   respjson.Field
-		DateOfDeath   respjson.Field
-		DeletedAt     respjson.Field
-		Email         respjson.Field
-		MiddleName    respjson.Field
-		Notes         respjson.Field
-		PostalCode    respjson.Field
-		State         respjson.Field
-		Suffix        respjson.Field
-		ExtraFields   map[string]respjson.Field
-		raw           string
+		ID           respjson.Field
+		CreatedAt    respjson.Field
+		FirstName    respjson.Field
+		HouseholdID  respjson.Field
+		IsDeceased   respjson.Field
+		IsGrantor    respjson.Field
+		IsPrimary    respjson.Field
+		LastName     respjson.Field
+		UpdatedAt    respjson.Field
+		AddressLine1 respjson.Field
+		AddressLine2 respjson.Field
+		City         respjson.Field
+		Country      respjson.Field
+		DateOfBirth  respjson.Field
+		DateOfDeath  respjson.Field
+		DeletedAt    respjson.Field
+		Email        respjson.Field
+		MiddleName   respjson.Field
+		Notes        respjson.Field
+		PostalCode   respjson.Field
+		State        respjson.Field
+		Suffix       respjson.Field
+		ExtraFields  map[string]respjson.Field
+		raw          string
 	} `json:"-"`
 }
 
@@ -226,9 +219,6 @@ type IndividualNewParams struct {
 	State param.Opt[string] `json:"state,omitzero"`
 	// Name suffix
 	Suffix param.Opt[string] `json:"suffix,omitzero"`
-	// Whether this client profile should be an eligible beneficiary for entities and
-	// gifts
-	IsBeneficiary param.Opt[bool] `json:"is_beneficiary,omitzero"`
 	// Whether the individual is deceased
 	IsDeceased param.Opt[bool] `json:"is_deceased,omitzero"`
 	// Whether this client profile should be an eligible grantor/owner/other principal
@@ -236,8 +226,6 @@ type IndividualNewParams struct {
 	IsGrantor param.Opt[bool] `json:"is_grantor,omitzero"`
 	// Whether this is a primary client of the household (at most 2 per household)
 	IsPrimary param.Opt[bool] `json:"is_primary,omitzero"`
-	// Whether this client profile should be an eligible trustee for entities
-	IsTrustee param.Opt[bool] `json:"is_trustee,omitzero"`
 	paramObj
 }
 
@@ -276,9 +264,6 @@ type IndividualUpdateParams struct {
 	Suffix param.Opt[string] `json:"suffix,omitzero"`
 	// First name of the individual
 	FirstName param.Opt[string] `json:"first_name,omitzero"`
-	// Whether this client profile should be an eligible beneficiary for entities and
-	// gifts
-	IsBeneficiary param.Opt[bool] `json:"is_beneficiary,omitzero"`
 	// Whether the individual is deceased
 	IsDeceased param.Opt[bool] `json:"is_deceased,omitzero"`
 	// Whether this client profile should be an eligible grantor/owner/other principal
@@ -286,8 +271,6 @@ type IndividualUpdateParams struct {
 	IsGrantor param.Opt[bool] `json:"is_grantor,omitzero"`
 	// Whether this is a primary client of the household (at most 2 per household)
 	IsPrimary param.Opt[bool] `json:"is_primary,omitzero"`
-	// Whether this client profile should be an eligible trustee for entities
-	IsTrustee param.Opt[bool] `json:"is_trustee,omitzero"`
 	// Last name of the individual
 	LastName param.Opt[string] `json:"last_name,omitzero"`
 	paramObj
