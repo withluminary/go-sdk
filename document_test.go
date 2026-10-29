@@ -32,13 +32,12 @@ func TestDocumentNewWithOptionalParams(t *testing.T) {
 		option.WithClientSecret("My Client Secret"),
 	)
 	_, err := client.Documents.New(context.TODO(), withluminary.DocumentNewParams{
-		File:                io.Reader(bytes.NewBuffer([]byte("Example data"))),
-		HouseholdID:         "household_01ARZ3NDEKTSV4RRFFQ69G5FAV",
-		Name:                "Trust Agreement.pdf",
-		Type:                withluminary.DocumentTypeGratDesignSummary,
-		EnableAISuggestions: withluminary.Bool(true),
-		EntityID:            withluminary.String("entity_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
-		IndividualID:        withluminary.String("client_profile_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
+		File:         io.Reader(bytes.NewBuffer([]byte("Example data"))),
+		HouseholdID:  "household_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+		Name:         "Trust Agreement.pdf",
+		Type:         withluminary.DocumentTypeGratDesignSummary,
+		EntityID:     withluminary.String("entity_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
+		IndividualID: withluminary.String("client_profile_01ARZ3NDEKTSV4RRFFQ69G5FAV"),
 	})
 	if err != nil {
 		var apierr *withluminary.Error
@@ -91,11 +90,10 @@ func TestDocumentUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		withluminary.DocumentUpdateParams{
-			EnableAISuggestions: withluminary.Bool(true),
-			EntityID:            withluminary.String("entity_id"),
-			IndividualID:        withluminary.String("individual_id"),
-			Name:                withluminary.String("x"),
-			Type:                withluminary.DocumentTypeGratDesignSummary,
+			EntityID:     withluminary.String("entity_id"),
+			IndividualID: withluminary.String("individual_id"),
+			Name:         withluminary.String("x"),
+			Type:         withluminary.DocumentTypeGratDesignSummary,
 		},
 	)
 	if err != nil {
