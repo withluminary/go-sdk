@@ -299,12 +299,15 @@ type HouseholdNewParamsPrimaryIndividual struct {
 	PostalCode param.Opt[string] `json:"postal_code,omitzero"`
 	// Name suffix
 	Suffix param.Opt[string] `json:"suffix,omitzero"`
-	// Whether this client profile should be an eligible beneficiary for entities and
-	// gifts
+	// Deprecated. This field is accepted for compatibility and ignored.
+	//
+	// Deprecated: deprecated
 	IsBeneficiary param.Opt[bool] `json:"is_beneficiary,omitzero"`
 	// Whether the individual is deceased
 	IsDeceased param.Opt[bool] `json:"is_deceased,omitzero"`
-	// Whether this client profile should be an eligible trustee for entities
+	// Deprecated. This field is accepted for compatibility and ignored.
+	//
+	// Deprecated: deprecated
 	IsTrustee param.Opt[bool] `json:"is_trustee,omitzero"`
 	paramObj
 }
@@ -366,7 +369,8 @@ type HouseholdListDocumentsParams struct {
 	// Filter by document type
 	//
 	// Any of "GRAT_DESIGN_SUMMARY", "GENERATED_PRESENTATION", "ASSET_VALUATION",
-	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRANSFER_CONFIRMATION",
+	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRUST_RELATED_DOCUMENT",
+	// "CERTIFICATE_OF_TRUST", "TRANSFER_CONFIRMATION",
 	// "EXISTING_REMAINDER_TRUST_DOCUMENT", "BALANCE_SHEET", "WILL", "WILL_CODICIL",
 	// "POWER_OF_ATTORNEY", "ASSIGNMENT_OF_INTEREST",
 	// "ASSIGNMENT_OF_TANGIBLE_PROPERTY", "LOAN_NOTE_AGREEMENT",
