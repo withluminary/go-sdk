@@ -148,7 +148,8 @@ type Document struct {
 	// Type of document
 	//
 	// Any of "GRAT_DESIGN_SUMMARY", "GENERATED_PRESENTATION", "ASSET_VALUATION",
-	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRANSFER_CONFIRMATION",
+	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRUST_RELATED_DOCUMENT",
+	// "CERTIFICATE_OF_TRUST", "TRANSFER_CONFIRMATION",
 	// "EXISTING_REMAINDER_TRUST_DOCUMENT", "BALANCE_SHEET", "WILL", "WILL_CODICIL",
 	// "POWER_OF_ATTORNEY", "ASSIGNMENT_OF_INTEREST",
 	// "ASSIGNMENT_OF_TANGIBLE_PROPERTY", "LOAN_NOTE_AGREEMENT",
@@ -164,25 +165,22 @@ type Document struct {
 	Type DocumentType `json:"type" api:"required"`
 	// Timestamp when the document was last updated
 	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
-	// Whether this document should be used for AI suggestions
-	EnableAISuggestions bool `json:"enable_ai_suggestions"`
 	// Entity ID if this document is owned by an entity
 	EntityID string `json:"entity_id" api:"nullable"`
 	// Individual ID if this document is associated with an individual
 	IndividualID string `json:"individual_id" api:"nullable"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		ID                  respjson.Field
-		CreatedAt           respjson.Field
-		HouseholdID         respjson.Field
-		Name                respjson.Field
-		Type                respjson.Field
-		UpdatedAt           respjson.Field
-		EnableAISuggestions respjson.Field
-		EntityID            respjson.Field
-		IndividualID        respjson.Field
-		ExtraFields         map[string]respjson.Field
-		raw                 string
+		ID           respjson.Field
+		CreatedAt    respjson.Field
+		HouseholdID  respjson.Field
+		Name         respjson.Field
+		Type         respjson.Field
+		UpdatedAt    respjson.Field
+		EntityID     respjson.Field
+		IndividualID respjson.Field
+		ExtraFields  map[string]respjson.Field
+		raw          string
 	} `json:"-"`
 }
 
@@ -222,6 +220,8 @@ const (
 	DocumentTypeAssetValuation                       DocumentType = "ASSET_VALUATION"
 	DocumentTypeSignedTrustDocument                  DocumentType = "SIGNED_TRUST_DOCUMENT"
 	DocumentTypeTrustAmendment                       DocumentType = "TRUST_AMENDMENT"
+	DocumentTypeTrustRelatedDocument                 DocumentType = "TRUST_RELATED_DOCUMENT"
+	DocumentTypeCertificateOfTrust                   DocumentType = "CERTIFICATE_OF_TRUST"
 	DocumentTypeTransferConfirmation                 DocumentType = "TRANSFER_CONFIRMATION"
 	DocumentTypeExistingRemainderTrustDocument       DocumentType = "EXISTING_REMAINDER_TRUST_DOCUMENT"
 	DocumentTypeBalanceSheet                         DocumentType = "BALANCE_SHEET"
@@ -288,7 +288,8 @@ type DocumentNewParams struct {
 	// Type of document
 	//
 	// Any of "GRAT_DESIGN_SUMMARY", "GENERATED_PRESENTATION", "ASSET_VALUATION",
-	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRANSFER_CONFIRMATION",
+	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRUST_RELATED_DOCUMENT",
+	// "CERTIFICATE_OF_TRUST", "TRANSFER_CONFIRMATION",
 	// "EXISTING_REMAINDER_TRUST_DOCUMENT", "BALANCE_SHEET", "WILL", "WILL_CODICIL",
 	// "POWER_OF_ATTORNEY", "ASSIGNMENT_OF_INTEREST",
 	// "ASSIGNMENT_OF_TANGIBLE_PROPERTY", "LOAN_NOTE_AGREEMENT",
@@ -302,8 +303,6 @@ type DocumentNewParams struct {
 	// "BENEFICIAL_OWNERSHIP_INFORMATION_REPORT", "FINCEN_FILING", "HEALTHCARE_PROXY",
 	// "LIVING_WILL", "DRIVERS_LICENSE", "PASSPORT", "DEED", "OTHER".
 	Type DocumentType `json:"type,omitzero" api:"required"`
-	// Whether this document should be used for AI suggestions
-	EnableAISuggestions param.Opt[bool] `json:"enable_ai_suggestions,omitzero"`
 	// Entity ID if this document is owned by an entity
 	EntityID param.Opt[string] `json:"entity_id,omitzero"`
 	// Individual ID if associated with an individual
@@ -334,14 +333,13 @@ type DocumentUpdateParams struct {
 	EntityID param.Opt[string] `json:"entity_id,omitzero"`
 	// Individual ID if associated with an individual
 	IndividualID param.Opt[string] `json:"individual_id,omitzero"`
-	// Whether this document should be used for AI suggestions
-	EnableAISuggestions param.Opt[bool] `json:"enable_ai_suggestions,omitzero"`
 	// Display name of the document
 	Name param.Opt[string] `json:"name,omitzero"`
 	// Type of document
 	//
 	// Any of "GRAT_DESIGN_SUMMARY", "GENERATED_PRESENTATION", "ASSET_VALUATION",
-	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRANSFER_CONFIRMATION",
+	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRUST_RELATED_DOCUMENT",
+	// "CERTIFICATE_OF_TRUST", "TRANSFER_CONFIRMATION",
 	// "EXISTING_REMAINDER_TRUST_DOCUMENT", "BALANCE_SHEET", "WILL", "WILL_CODICIL",
 	// "POWER_OF_ATTORNEY", "ASSIGNMENT_OF_INTEREST",
 	// "ASSIGNMENT_OF_TANGIBLE_PROPERTY", "LOAN_NOTE_AGREEMENT",
@@ -378,7 +376,8 @@ type DocumentListParams struct {
 	// Filter by document type
 	//
 	// Any of "GRAT_DESIGN_SUMMARY", "GENERATED_PRESENTATION", "ASSET_VALUATION",
-	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRANSFER_CONFIRMATION",
+	// "SIGNED_TRUST_DOCUMENT", "TRUST_AMENDMENT", "TRUST_RELATED_DOCUMENT",
+	// "CERTIFICATE_OF_TRUST", "TRANSFER_CONFIRMATION",
 	// "EXISTING_REMAINDER_TRUST_DOCUMENT", "BALANCE_SHEET", "WILL", "WILL_CODICIL",
 	// "POWER_OF_ATTORNEY", "ASSIGNMENT_OF_INTEREST",
 	// "ASSIGNMENT_OF_TANGIBLE_PROPERTY", "LOAN_NOTE_AGREEMENT",
